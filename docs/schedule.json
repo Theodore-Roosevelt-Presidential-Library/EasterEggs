@@ -1,0 +1,1044 @@
+{
+  "about": "Source of truth for trlibrary.com delights. Edit here, then run: node scripts/build.mjs. Rules: {\"date\":\"MM-DD\"}, {\"nth\":[month, weekday 0=Sun, n or -1 for last]}, {\"election\":true}, {\"dates\":[\"YYYY-MM-DD\"]}, {\"live\":\"aurora|snow\"}, {\"keyword\":\"word\"}. span = number of days it runs (default 1). Higher priority wins when two land on the same day; a quiet entry blocks everything below it. review: \"ok\" once facts and links are checked, otherwise what still needs checking. Entries with enabled:false never play on the live site but can be previewed.",
+  "eggs": [
+    {
+      "id": "tr-birthday",
+      "title": "T.R.'s birthday",
+      "kind": "anniversary",
+      "rule": {
+        "date": "10-27"
+      },
+      "effect": "confetti",
+      "options": {
+        "lines": [
+          "HAPPY",
+          "BIRTHDAY,",
+          "T.R."
+        ]
+      },
+      "headline": "Happy Birthday, T.R.!",
+      "text": "Theodore Roosevelt was born in New York City on October 27, 1858.",
+      "link": {
+        "label": "Sign his birthday card",
+        "href": "https://www.trlibrary.com/birthdaycard"
+      },
+      "priority": 30,
+      "enabled": true,
+      "review": "ok"
+    },
+    {
+      "id": "kettle-hill",
+      "title": "Kettle Hill and San Juan Heights",
+      "kind": "anniversary",
+      "rule": {
+        "date": "07-01"
+      },
+      "effect": "type",
+      "options": {
+        "lines": [
+          "KETTLE HILL",
+          "JULY 1, 1898"
+        ]
+      },
+      "headline": "July 1, 1898",
+      "text": "Roosevelt led the Rough Riders up Kettle Hill and on to San Juan Heights, outside Santiago, Cuba.",
+      "link": {
+        "label": "Read the story",
+        "href": "https://www.trlibrary.com/tr"
+      },
+      "priority": 30,
+      "enabled": false,
+      "review": "Run through HistorianPanel (sp-navy-rough-riders) and confirm the link."
+    },
+    {
+      "id": "independence-day",
+      "title": "Independence Day and the Dickinson oration",
+      "kind": "anniversary",
+      "rule": {
+        "date": "07-04"
+      },
+      "effect": "fireworks",
+      "headline": "Happy Independence Day",
+      "text": "On July 4, 1886, Roosevelt gave the Independence Day address in Dickinson, Dakota Territory, one of his first major speeches.",
+      "link": {
+        "label": "Plan a visit",
+        "href": "https://www.trlibrary.com/visit"
+      },
+      "priority": 30,
+      "enabled": true,
+      "review": "Confirm 'one of his first major speeches' with HistorianPanel (sp-badlands)."
+    },
+    {
+      "id": "nobel-peace-prize",
+      "title": "Nobel Peace Prize",
+      "kind": "anniversary",
+      "rule": {
+        "date": "12-10"
+      },
+      "effect": "type",
+      "options": {
+        "lines": [
+          "NOBEL",
+          "PEACE PRIZE",
+          "1906"
+        ]
+      },
+      "headline": "December 10, 1906",
+      "text": "Roosevelt became the first American awarded the Nobel Peace Prize, for his work to end the Russo-Japanese War.",
+      "link": {
+        "label": "Read the story",
+        "href": "https://www.trlibrary.com/tr"
+      },
+      "priority": 30,
+      "enabled": true,
+      "review": "ok"
+    },
+    {
+      "id": "teddy-bear",
+      "title": "The teddy bear hunt",
+      "kind": "anniversary",
+      "rule": {
+        "date": "11-14"
+      },
+      "effect": "type",
+      "options": {
+        "lines": [
+          "THE BEAR",
+          "HE WOULDN'T",
+          "SHOOT"
+        ]
+      },
+      "headline": "The teddy bear turns another year older",
+      "text": "On a November 1902 hunt in Mississippi, Roosevelt refused to shoot a bear that had been tied up for him. A newspaper cartoon of the moment inspired the teddy bear.",
+      "link": {
+        "label": "Read the story",
+        "href": "https://www.trlibrary.com/tr"
+      },
+      "priority": 30,
+      "enabled": true,
+      "review": "ok"
+    },
+    {
+      "id": "badlands-arrival",
+      "title": "T.R. arrives in the Badlands",
+      "kind": "anniversary",
+      "rule": {
+        "date": "09-08"
+      },
+      "effect": "scene",
+      "options": {
+        "kind": "badlands",
+        "time": "dawn",
+        "life": "train"
+      },
+      "headline": "Welcome to the Badlands",
+      "text": "In September 1883, a young New Yorker stepped off the train at Little Missouri, Dakota Territory, to hunt bison.",
+      "link": {
+        "label": "Plan a visit",
+        "href": "https://www.trlibrary.com/visit"
+      },
+      "priority": 30,
+      "enabled": false,
+      "review": "Confirm the arrival date (September 7 or 8, 1883) with HistorianPanel (sp-badlands) before turning on."
+    },
+    {
+      "id": "nd-statehood",
+      "title": "North Dakota statehood",
+      "kind": "anniversary",
+      "rule": {
+        "date": "11-02"
+      },
+      "effect": "scene",
+      "options": {
+        "kind": "badlands",
+        "time": "day",
+        "lines": [
+          "NORTH DAKOTA",
+          "1889"
+        ]
+      },
+      "headline": "Happy Statehood Day, North Dakota",
+      "text": "North Dakota joined the Union on November 2, 1889.",
+      "link": {
+        "label": "Plan a visit",
+        "href": "https://www.trlibrary.com/visit"
+      },
+      "priority": 30,
+      "enabled": true,
+      "review": "ok"
+    },
+    {
+      "id": "pelican-island",
+      "title": "Pelican Island",
+      "kind": "anniversary",
+      "rule": {
+        "date": "03-14"
+      },
+      "effect": "flight",
+      "options": {
+        "kind": "pelican",
+        "count": 7
+      },
+      "headline": "March 14, 1903",
+      "text": "Roosevelt set aside Florida's Pelican Island as the first federal bird reservation, the start of today's National Wildlife Refuge System.",
+      "link": {
+        "label": "Explore the Public Lands Map",
+        "href": "https://publiclands.labs.trlibrary.com"
+      },
+      "priority": 30,
+      "enabled": true,
+      "review": "ok"
+    },
+    {
+      "id": "antiquities-act",
+      "title": "The Antiquities Act",
+      "kind": "anniversary",
+      "rule": {
+        "date": "06-08"
+      },
+      "effect": "type",
+      "options": {
+        "lines": [
+          "ANTIQUITIES",
+          "ACT",
+          "1906"
+        ]
+      },
+      "headline": "June 8, 1906",
+      "text": "Roosevelt signed the Antiquities Act, the law he used to protect places like Devils Tower and the Grand Canyon.",
+      "link": {
+        "label": "Explore the Public Lands Map",
+        "href": "https://publiclands.labs.trlibrary.com"
+      },
+      "priority": 30,
+      "enabled": true,
+      "review": "ok"
+    },
+    {
+      "id": "devils-tower",
+      "title": "Devils Tower",
+      "kind": "anniversary",
+      "rule": {
+        "date": "09-24"
+      },
+      "effect": "scene",
+      "options": {
+        "kind": "tower",
+        "time": "dusk"
+      },
+      "headline": "September 24, 1906",
+      "text": "Roosevelt proclaimed Wyoming's Devils Tower the first national monument.",
+      "link": {
+        "label": "Explore the Public Lands Map",
+        "href": "https://publiclands.labs.trlibrary.com"
+      },
+      "priority": 30,
+      "enabled": true,
+      "review": "ok"
+    },
+    {
+      "id": "grand-canyon",
+      "title": "Grand Canyon National Monument",
+      "kind": "anniversary",
+      "rule": {
+        "date": "01-11"
+      },
+      "effect": "scene",
+      "options": {
+        "kind": "canyon",
+        "time": "day"
+      },
+      "headline": "January 11, 1908",
+      "text": "Roosevelt protected the Grand Canyon as a national monument. It became a national park in 1919.",
+      "link": {
+        "label": "Explore the Public Lands Map",
+        "href": "https://publiclands.labs.trlibrary.com"
+      },
+      "priority": 30,
+      "enabled": true,
+      "review": "ok"
+    },
+    {
+      "id": "forest-service",
+      "title": "The Forest Service",
+      "kind": "anniversary",
+      "rule": {
+        "date": "02-01"
+      },
+      "effect": "scene",
+      "options": {
+        "kind": "forest",
+        "time": "day"
+      },
+      "headline": "February 1, 1905",
+      "text": "Roosevelt signed the Transfer Act, putting the nation's forest reserves under the agency that became the U.S. Forest Service.",
+      "link": {
+        "label": "Explore the Public Lands Map",
+        "href": "https://publiclands.labs.trlibrary.com"
+      },
+      "priority": 30,
+      "enabled": true,
+      "review": "ok"
+    },
+    {
+      "id": "earth-day",
+      "title": "Earth Day",
+      "kind": "legacy",
+      "rule": {
+        "date": "04-22"
+      },
+      "effect": "scene",
+      "options": {
+        "kind": "prairie",
+        "time": "day"
+      },
+      "headline": "Happy Earth Day",
+      "text": "The land Roosevelt protected is still yours to explore. Get outside today.",
+      "link": {
+        "label": "Explore the Public Lands Map",
+        "href": "https://publiclands.labs.trlibrary.com"
+      },
+      "priority": 20,
+      "enabled": true,
+      "review": "ok"
+    },
+    {
+      "id": "arbor-day",
+      "title": "Arbor Day",
+      "kind": "legacy",
+      "rule": {
+        "nth": [
+          4,
+          5,
+          -1
+        ]
+      },
+      "effect": "fall",
+      "options": {
+        "kind": "leaves",
+        "palette": "spring"
+      },
+      "headline": "Happy Arbor Day",
+      "text": "In 1907, Roosevelt wrote an Arbor Day message to the nation's schoolchildren about why trees matter. Plant one today.",
+      "link": {
+        "label": "Read more",
+        "href": "https://www.trlibrary.com/tr"
+      },
+      "priority": 20,
+      "enabled": true,
+      "review": "Confirm the 1907 Arbor Day message with HistorianPanel (sp-conservation)."
+    },
+    {
+      "id": "nps-birthday",
+      "title": "National Park Service birthday",
+      "kind": "legacy",
+      "rule": {
+        "date": "08-25"
+      },
+      "effect": "type",
+      "options": {
+        "lines": [
+          "HAPPY BIRTHDAY,",
+          "NATIONAL",
+          "PARK SERVICE"
+        ]
+      },
+      "headline": "Happy Birthday, National Park Service",
+      "text": "Congress created the National Park Service on August 25, 1916, to care for parks like the ones Roosevelt helped protect.",
+      "link": {
+        "label": "Plan a park visit",
+        "href": "https://www.trlibrary.com/visit"
+      },
+      "priority": 20,
+      "enabled": true,
+      "review": "ok"
+    },
+    {
+      "id": "trnp-memorial-park",
+      "title": "Theodore Roosevelt National Memorial Park",
+      "kind": "legacy",
+      "rule": {
+        "date": "04-25"
+      },
+      "effect": "type",
+      "options": {
+        "lines": [
+          "THEODORE ROOSEVELT",
+          "NATIONAL MEMORIAL PARK",
+          "1947"
+        ]
+      },
+      "headline": "April 25, 1947",
+      "text": "Congress set aside Theodore Roosevelt National Memorial Park in the Badlands where he ranched.",
+      "link": {
+        "label": "Plan a park visit",
+        "href": "https://www.trlibrary.com/visit"
+      },
+      "priority": 20,
+      "enabled": false,
+      "review": "Confirm the date with HistorianPanel (sp-nps-sites)."
+    },
+    {
+      "id": "trnp-national-park",
+      "title": "Theodore Roosevelt National Park",
+      "kind": "legacy",
+      "rule": {
+        "date": "11-10"
+      },
+      "effect": "type",
+      "options": {
+        "lines": [
+          "THEODORE ROOSEVELT",
+          "NATIONAL PARK",
+          "1978"
+        ]
+      },
+      "headline": "November 10, 1978",
+      "text": "Theodore Roosevelt National Memorial Park became Theodore Roosevelt National Park.",
+      "link": {
+        "label": "Plan a park visit",
+        "href": "https://www.trlibrary.com/visit"
+      },
+      "priority": 20,
+      "enabled": false,
+      "review": "Confirm the date with HistorianPanel (sp-nps-sites)."
+    },
+    {
+      "id": "public-lands-day",
+      "title": "National Public Lands Day",
+      "kind": "legacy",
+      "rule": {
+        "nth": [
+          9,
+          6,
+          4
+        ]
+      },
+      "effect": "scene",
+      "options": {
+        "kind": "badlands",
+        "time": "day",
+        "life": "hiker"
+      },
+      "headline": "Happy National Public Lands Day",
+      "text": "Find the places Roosevelt protected, and go see one.",
+      "link": {
+        "label": "Explore the Public Lands Map",
+        "href": "https://publiclands.labs.trlibrary.com"
+      },
+      "priority": 22,
+      "enabled": true,
+      "review": "ok"
+    },
+    {
+      "id": "hunting-fishing-day",
+      "title": "National Hunting and Fishing Day",
+      "kind": "legacy",
+      "rule": {
+        "nth": [
+          9,
+          6,
+          4
+        ]
+      },
+      "effect": "scene",
+      "options": {
+        "kind": "river",
+        "time": "dawn",
+        "life": "canoe"
+      },
+      "headline": "Happy National Hunting and Fishing Day",
+      "text": "Hunters and anglers were some of Roosevelt's strongest allies in conservation.",
+      "link": {
+        "label": "Hunting and fishing near Medora",
+        "href": "https://huntfish.labs.trlibrary.com"
+      },
+      "priority": 21,
+      "enabled": true,
+      "review": "Shares a date with National Public Lands Day, which wins. Lower its priority or change the rule if you want it to play."
+    },
+    {
+      "id": "refuge-week",
+      "title": "National Wildlife Refuge Week",
+      "kind": "legacy",
+      "rule": {
+        "nth": [
+          10,
+          0,
+          2
+        ]
+      },
+      "span": 7,
+      "effect": "flight",
+      "options": {
+        "kind": "duck",
+        "count": 9
+      },
+      "headline": "It's National Wildlife Refuge Week",
+      "text": "The refuge system began with Pelican Island in 1903 and now protects wildlife in every state.",
+      "link": {
+        "label": "Explore the Public Lands Map",
+        "href": "https://publiclands.labs.trlibrary.com"
+      },
+      "priority": 18,
+      "enabled": true,
+      "review": "Confirm 'in every state' against current U.S. Fish and Wildlife Service figures."
+    },
+    {
+      "id": "migratory-bird-day",
+      "title": "World Migratory Bird Day",
+      "kind": "legacy",
+      "rule": {
+        "nth": [
+          5,
+          6,
+          2
+        ]
+      },
+      "effect": "flight",
+      "options": {
+        "kind": "flock"
+      },
+      "headline": "Happy World Migratory Bird Day",
+      "text": "Roosevelt was a lifelong birder, and he protected more than 50 bird reservations.",
+      "link": {
+        "label": "Read more",
+        "href": "https://www.trlibrary.com/tr"
+      },
+      "priority": 20,
+      "enabled": false,
+      "review": "Confirm the bird reservation count with HistorianPanel (sp-conservation)."
+    },
+    {
+      "id": "world-wildlife-day",
+      "title": "World Wildlife Day",
+      "kind": "legacy",
+      "rule": {
+        "date": "03-03"
+      },
+      "effect": "scene",
+      "options": {
+        "kind": "badlands",
+        "time": "day",
+        "life": "pronghorn"
+      },
+      "headline": "Happy World Wildlife Day",
+      "text": "Pronghorn, bison and wild horses still roam the Badlands Roosevelt knew.",
+      "link": {
+        "label": "Wildlife Watch",
+        "href": "https://wildlife.labs.trlibrary.com"
+      },
+      "priority": 20,
+      "enabled": true,
+      "review": "ok"
+    },
+    {
+      "id": "national-mammal",
+      "title": "Bison named the national mammal",
+      "kind": "legacy",
+      "rule": {
+        "date": "05-09"
+      },
+      "effect": "scene",
+      "options": {
+        "kind": "badlands",
+        "time": "day",
+        "life": "bison"
+      },
+      "headline": "May 9, 2016",
+      "text": "The bison became the national mammal of the United States. Bison first brought Roosevelt to the Badlands in 1883.",
+      "link": {
+        "label": "Wildlife Watch",
+        "href": "https://wildlife.labs.trlibrary.com"
+      },
+      "priority": 20,
+      "enabled": true,
+      "review": "ok"
+    },
+    {
+      "id": "bison-day",
+      "title": "National Bison Day",
+      "kind": "legacy",
+      "rule": {
+        "nth": [
+          11,
+          6,
+          1
+        ]
+      },
+      "effect": "scene",
+      "options": {
+        "kind": "badlands",
+        "time": "dusk",
+        "life": "bison",
+        "count": 8
+      },
+      "headline": "Happy National Bison Day",
+      "text": "Bison first brought Roosevelt to the Badlands in 1883. You can still see them in Theodore Roosevelt National Park.",
+      "link": {
+        "label": "Wildlife Watch",
+        "href": "https://wildlife.labs.trlibrary.com"
+      },
+      "priority": 20,
+      "enabled": true,
+      "review": "ok"
+    },
+    {
+      "id": "rivers-day",
+      "title": "World Rivers Day",
+      "kind": "legacy",
+      "rule": {
+        "nth": [
+          9,
+          0,
+          4
+        ]
+      },
+      "effect": "scene",
+      "options": {
+        "kind": "river",
+        "time": "day",
+        "life": "canoe"
+      },
+      "headline": "Happy World Rivers Day",
+      "text": "Roosevelt's Elkhorn Ranch sat on the banks of the Little Missouri River.",
+      "link": {
+        "label": "The Little Missouri today",
+        "href": "https://littlemo.labs.trlibrary.com"
+      },
+      "priority": 20,
+      "enabled": true,
+      "review": "ok"
+    },
+    {
+      "id": "trails-day",
+      "title": "National Trails Day",
+      "kind": "legacy",
+      "rule": {
+        "nth": [
+          6,
+          6,
+          1
+        ]
+      },
+      "effect": "scene",
+      "options": {
+        "kind": "badlands",
+        "time": "dawn",
+        "life": "hiker"
+      },
+      "headline": "Happy National Trails Day",
+      "text": "Roosevelt preached the strenuous life. Find a Badlands trail and take a hike.",
+      "link": {
+        "label": "Plan a visit",
+        "href": "https://www.trlibrary.com/visit"
+      },
+      "priority": 20,
+      "enabled": true,
+      "review": "ok"
+    },
+    {
+      "id": "ranger-day",
+      "title": "World Ranger Day",
+      "kind": "legacy",
+      "rule": {
+        "date": "07-31"
+      },
+      "effect": "type",
+      "options": {
+        "lines": [
+          "THANK YOU,",
+          "RANGERS"
+        ]
+      },
+      "headline": "Happy World Ranger Day",
+      "text": "Thank you to the rangers who care for Theodore Roosevelt National Park and public lands everywhere.",
+      "link": {
+        "label": "Plan a park visit",
+        "href": "https://www.trlibrary.com/visit"
+      },
+      "priority": 20,
+      "enabled": true,
+      "review": "ok"
+    },
+    {
+      "id": "panama-canal",
+      "title": "The Panama Canal opens",
+      "kind": "legacy",
+      "rule": {
+        "date": "08-15"
+      },
+      "effect": "scene",
+      "options": {
+        "kind": "sea",
+        "time": "day",
+        "life": "ship"
+      },
+      "headline": "August 15, 1914",
+      "text": "The Panama Canal opened to ships. Roosevelt had made building it a goal of his presidency.",
+      "link": {
+        "label": "Read the story",
+        "href": "https://www.trlibrary.com/tr"
+      },
+      "priority": 20,
+      "enabled": true,
+      "review": "ok"
+    },
+    {
+      "id": "teddy-bear-day",
+      "title": "National Teddy Bear Day",
+      "kind": "legacy",
+      "rule": {
+        "date": "09-09"
+      },
+      "effect": "type",
+      "options": {
+        "lines": [
+          "HAPPY",
+          "TEDDY BEAR",
+          "DAY"
+        ]
+      },
+      "headline": "Happy National Teddy Bear Day",
+      "text": "The teddy bear is named for Theodore Roosevelt, after a 1902 hunting trip in Mississippi.",
+      "link": {
+        "label": "Read the story",
+        "href": "https://www.trlibrary.com/tr"
+      },
+      "priority": 20,
+      "enabled": true,
+      "review": "ok"
+    },
+    {
+      "id": "read-across-america",
+      "title": "Read Across America Day",
+      "kind": "legacy",
+      "rule": {
+        "date": "03-02"
+      },
+      "effect": "fall",
+      "options": {
+        "kind": "pages"
+      },
+      "headline": "Happy Read Across America Day",
+      "text": "Roosevelt was a lifelong reader and the author of dozens of books. What are you reading?",
+      "link": {
+        "label": "Read more",
+        "href": "https://www.trlibrary.com/tr"
+      },
+      "priority": 20,
+      "enabled": false,
+      "review": "Confirm 'dozens of books' with HistorianPanel (sp-author)."
+    },
+    {
+      "id": "museum-day",
+      "title": "International Museum Day",
+      "kind": "legacy",
+      "rule": {
+        "date": "05-18"
+      },
+      "effect": "type",
+      "options": {
+        "lines": [
+          "MUSEUM",
+          "DAY"
+        ]
+      },
+      "headline": "Happy International Museum Day",
+      "text": "Come see Roosevelt's story in the Badlands where it took shape.",
+      "link": {
+        "label": "Plan a visit",
+        "href": "https://www.trlibrary.com/visit"
+      },
+      "priority": 20,
+      "enabled": true,
+      "review": "ok"
+    },
+    {
+      "id": "voter-registration-day",
+      "title": "National Voter Registration Day",
+      "kind": "civic",
+      "rule": {
+        "nth": [
+          9,
+          2,
+          4
+        ]
+      },
+      "effect": "type",
+      "options": {
+        "lines": [
+          "STEP INTO",
+          "THE ARENA"
+        ]
+      },
+      "headline": "Step into the arena",
+      "text": "It's National Voter Registration Day. Make sure you're registered.",
+      "link": {
+        "label": "Register at vote.gov",
+        "href": "https://vote.gov"
+      },
+      "priority": 20,
+      "enabled": true,
+      "review": "ok"
+    },
+    {
+      "id": "constitution-day",
+      "title": "Constitution Day",
+      "kind": "civic",
+      "rule": {
+        "date": "09-17"
+      },
+      "effect": "type",
+      "options": {
+        "lines": [
+          "WE THE",
+          "PEOPLE"
+        ]
+      },
+      "headline": "Happy Constitution Day",
+      "text": "The Constitution was signed on September 17, 1787.",
+      "link": {
+        "label": "Read more",
+        "href": "https://www.trlibrary.com/tr"
+      },
+      "priority": 20,
+      "enabled": true,
+      "review": "ok"
+    },
+    {
+      "id": "election-day",
+      "title": "Election Day",
+      "kind": "civic",
+      "rule": {
+        "election": true
+      },
+      "effect": "type",
+      "options": {
+        "lines": [
+          "STEP INTO",
+          "THE ARENA"
+        ]
+      },
+      "headline": "Step into the arena",
+      "text": "It's Election Day. Make your voice heard.",
+      "link": {
+        "label": "Find your polling place at vote.gov",
+        "href": "https://vote.gov"
+      },
+      "priority": 25,
+      "enabled": true,
+      "review": "ok"
+    },
+    {
+      "id": "presidents-day",
+      "title": "Presidents' Day",
+      "kind": "seasonal",
+      "rule": {
+        "nth": [
+          2,
+          1,
+          3
+        ]
+      },
+      "effect": "type",
+      "options": {
+        "lines": [
+          "26TH",
+          "PRESIDENT"
+        ]
+      },
+      "headline": "Happy Presidents' Day",
+      "text": "Theodore Roosevelt was the 26th President of the United States.",
+      "link": {
+        "label": "Plan a visit",
+        "href": "https://www.trlibrary.com/visit"
+      },
+      "priority": 20,
+      "enabled": true,
+      "review": "ok"
+    },
+    {
+      "id": "thanksgiving",
+      "title": "Thanksgiving",
+      "kind": "seasonal",
+      "rule": {
+        "nth": [
+          11,
+          4,
+          4
+        ]
+      },
+      "effect": "fall",
+      "options": {
+        "kind": "leaves",
+        "palette": "autumn"
+      },
+      "headline": "Happy Thanksgiving",
+      "text": "From the Badlands, thank you for being part of the Library's story.",
+      "link": {
+        "label": "T.R.'s Thanksgivings",
+        "href": "https://www.trlibrary.com/tr"
+      },
+      "priority": 20,
+      "enabled": true,
+      "review": "Point the link to the Thanksgiving timeline page once it is live."
+    },
+    {
+      "id": "christmas",
+      "title": "Christmas",
+      "kind": "seasonal",
+      "rule": {
+        "date": "12-24"
+      },
+      "span": 2,
+      "effect": "fall",
+      "options": {
+        "kind": "snow"
+      },
+      "headline": "Merry Christmas from the Badlands",
+      "text": "Wishing you a warm holiday season.",
+      "link": {
+        "label": "T.R.'s Christmases",
+        "href": "https://www.trlibrary.com/tr"
+      },
+      "priority": 20,
+      "enabled": true,
+      "review": "Point the link to the Christmas timeline page once it is live."
+    },
+    {
+      "id": "veterans-day",
+      "title": "Veterans Day",
+      "kind": "quiet",
+      "rule": {
+        "date": "11-11"
+      },
+      "effect": "note",
+      "headline": "Thank you to all who served",
+      "text": "On Veterans Day, the Library honors America's veterans.",
+      "priority": 90,
+      "enabled": true,
+      "review": "ok"
+    },
+    {
+      "id": "quiet-feb-14",
+      "title": "Deaths of Martha and Alice Roosevelt",
+      "kind": "quiet",
+      "rule": {
+        "date": "02-14"
+      },
+      "effect": "none",
+      "notes": "Roosevelt's mother and his wife Alice died on February 14, 1884. Blocks any Valentine's Day delight.",
+      "priority": 100,
+      "enabled": true,
+      "review": "ok"
+    },
+    {
+      "id": "quiet-jan-6",
+      "title": "Death of Theodore Roosevelt",
+      "kind": "quiet",
+      "rule": {
+        "date": "01-06"
+      },
+      "effect": "none",
+      "notes": "Roosevelt died at Sagamore Hill on January 6, 1919. No animation.",
+      "priority": 100,
+      "enabled": true,
+      "review": "ok"
+    },
+    {
+      "id": "quiet-sep-14",
+      "title": "McKinley's death and T.R.'s oath",
+      "kind": "quiet",
+      "rule": {
+        "date": "09-14"
+      },
+      "effect": "none",
+      "notes": "Roosevelt took the oath of office on September 14, 1901, the day McKinley died. Not a celebration.",
+      "priority": 100,
+      "enabled": true,
+      "review": "ok"
+    },
+    {
+      "id": "quiet-oct-14",
+      "title": "Milwaukee shooting",
+      "kind": "quiet",
+      "rule": {
+        "date": "10-14"
+      },
+      "effect": "none",
+      "notes": "Roosevelt was shot in Milwaukee on October 14, 1912. Keep to text on social, nothing animated on the site.",
+      "priority": 100,
+      "enabled": true,
+      "review": "ok"
+    },
+    {
+      "id": "aurora-tonight",
+      "title": "Northern lights possible tonight",
+      "kind": "live",
+      "rule": {
+        "live": "aurora"
+      },
+      "effect": "aurora",
+      "headline": "Northern lights possible tonight",
+      "text": "The space weather forecast is strong enough for the aurora to show over Medora after dark.",
+      "link": {
+        "label": "See tonight's outlook",
+        "href": "https://www.trlibrary.com/visit/stargazing"
+      },
+      "priority": 10,
+      "enabled": true,
+      "review": "Confirm the link goes to the Northern Lights Watch page."
+    },
+    {
+      "id": "snow-in-medora",
+      "title": "Snow in Medora",
+      "kind": "live",
+      "rule": {
+        "live": "snow"
+      },
+      "effect": "fall",
+      "options": {
+        "kind": "snow"
+      },
+      "headline": "It's snowing in Medora",
+      "text": "The Badlands in snow are worth the trip. Check today's conditions before you go.",
+      "link": {
+        "label": "Today in the Badlands",
+        "href": "https://www.trlibrary.com/visit"
+      },
+      "priority": 9,
+      "enabled": true,
+      "review": "ok"
+    },
+    {
+      "id": "bully",
+      "title": "Hidden: type \"bully\"",
+      "kind": "hidden",
+      "rule": {
+        "keyword": "bully"
+      },
+      "effect": "confetti",
+      "options": {
+        "lines": [
+          "BULLY!"
+        ],
+        "shapes": [
+          "paper",
+          "paper",
+          "streamer",
+          "glasses"
+        ]
+      },
+      "headline": "Bully!",
+      "text": "You found a secret. It was Roosevelt's word for something excellent.",
+      "link": {
+        "label": "Plan a visit",
+        "href": "https://www.trlibrary.com/visit"
+      },
+      "priority": 0,
+      "enabled": true,
+      "review": "ok"
+    }
+  ]
+}
