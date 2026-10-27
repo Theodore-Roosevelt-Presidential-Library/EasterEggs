@@ -9,10 +9,11 @@ export default (egg, ctx) => play(egg, ctx, async (s) => {
   const { g, w, h } = s.canvas();
   const o = egg.options || {};
   const shapes = o.shapes || ['paper', 'paper', 'paper', 'streamer'];
+  const colors = o.colors || COLORS;
   const ps = [];
   const make = (x, y, vx, vy) => {
     const shape = pick(shapes);
-    ps.push({ x, y, vx, vy, shape, c: pick(COLORS), s: rand(7, 13), r: rand(0, 6.28), vr: rand(-6, 6),
+    ps.push({ x, y, vx, vy, shape, c: pick(colors), s: rand(7, 13), r: rand(0, 6.28), vr: rand(-6, 6),
       tilt: rand(0, 6.28), vt: rand(5, 12), wob: rand(0, 6.28), len: rand(40, 90), trail: [] });
   };
   const cannon = (x, dir, n) => {

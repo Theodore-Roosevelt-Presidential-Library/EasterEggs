@@ -111,10 +111,14 @@ footer{padding:40px 16px 60px;color:var(--muted);font:14px/1.5 var(--ui)}
       </div>
       <div class="card">
         <div class="eyebrow" style="color:var(--forest)">Preview settings</div>
-        <p class="ui" style="margin:8px 0 12px;color:var(--muted)">Where the message card sits on the page.</p>
+        <p class="ui" style="margin:8px 0 12px;color:var(--muted)">Where the message card sits, and whether real photographs land on the artwork as prints.</p>
         <div class="row">
           <label class="ui" for="pos">Card position</label>
           <select id="pos"><option value="top">Top center</option><option value="bottom-left">Bottom left</option><option value="bottom-right">Bottom right</option></select>
+        </div>
+        <div class="row" style="margin-top:12px">
+          <label class="ui" for="look">Look</label>
+          <select id="look"><option value="photo">Artwork with photo prints</option><option value="painted">Artwork only</option></select>
         </div>
         <p class="ui" style="margin:14px 0 0;color:var(--muted)">Visitors who have reduced motion turned on see the message without the animation. To check it here, turn on reduced motion in your system settings.</p>
       </div>
@@ -174,7 +178,7 @@ footer{padding:40px 16px 60px;color:var(--muted);font:14px/1.5 var(--ui)}
 (function () {
   var D = window.TRPLDelight;
   var KINDS = { anniversary: 'T.R. anniversary', legacy: 'Legacy day', civic: 'Civic', seasonal: 'Seasonal', quiet: 'Quiet day', live: 'Live conditions', hidden: 'Hidden' };
-  var EFFECTS = { confetti: 'Celebration', fireworks: 'Fireworks', fall: 'Drifting', flight: 'Flight', scene: 'Badlands scene', type: 'Type bands', aurora: 'Northern lights', note: 'Message only', none: 'Nothing plays' };
+  var EFFECTS = { confetti: 'Celebration', fireworks: 'Fireworks', fall: 'Drifting', flight: 'Flight', scene: 'Landscape', type: 'Type bands', branch: 'Olive branch', flag: 'Flag', ink: 'Parchment and ink', aurora: 'Northern lights', note: 'Message only', none: 'Nothing plays' };
   var $ = function (id) { return document.getElementById(id); };
   var pad = function (n) { return (n < 10 ? '0' : '') + n; };
   var iso = function (d) { return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()); };
@@ -191,7 +195,7 @@ footer{padding:40px 16px 60px;color:var(--muted);font:14px/1.5 var(--ui)}
     if (r.review && r.review !== 'ok') return { cls: 'check', text: 'Needs a check' };
     return { cls: 'on', text: 'On' };
   }
-  function play(e) { D.run(e.id || e, { preview: true, position: $('pos').value }); }
+  function play(e) { D.run(e.id || e, { preview: true, position: $('pos').value, style: $('look').value }); }
 
   function showDay(d) {
     selected = d;
@@ -268,7 +272,7 @@ footer{padding:40px 16px 60px;color:var(--muted);font:14px/1.5 var(--ui)}
         '<h3>' + esc(e.title) + '</h3>' +
         (e.headline ? '<p class="copy"><strong>' + esc(e.headline) + '</strong> ' + esc(e.text || '') + '</p>' : '') +
         '<div class="meta"><span class="pill"><i style="background:' + kindColor(e.kind) + '"></i>' + KINDS[e.kind] + '</span>' +
-        '<span class="pill">' + EFFECTS[e.effect] + (e.options ? (function (o) { var bits = [o.kind, o.life, o.time].filter(Boolean); if (o.lines) bits.push('\u201c' + o.lines.join(' ') + '\u201d'); return bits.length ? ': ' + esc(bits.join(' · ')) : ''; })(e.options) : '') + '</span>' +
+        '<span class="pill">' + EFFECTS[e.effect] + (e.options ? (function (o) { var bits = [o.photo ? 'photo' : '', o.kind || (o.montage ? 'montage' : ''), o.life, o.time].filter(Boolean); if (o.lines) bits.push('\u201c' + o.lines.join(' ') + '\u201d'); return bits.length ? ': ' + esc(bits.join(' · ')) : ''; })(e.options) : '') + '</span>' +
         '<span class="pill ' + st.cls + '">' + st.text + '</span></div>' +
         (rv.review && rv.review !== 'ok' ? '<p class="note">' + esc(rv.review) + '</p>' : '') +
         (rv.notes ? '<p class="note quiet">' + esc(rv.notes) + '</p>' : '') + clash +

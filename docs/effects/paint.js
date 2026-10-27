@@ -63,6 +63,48 @@ export function landscape(w, h, kind = 'badlands', time = 'day', seed = Math.flo
     const layers = night ? ['#1E3A4A', '#183326', '#0F2219'] : ['#9DB3A6', '#4E7A5E', C.forest];
     layers.forEach((col, i) => trees(g, w, h, h * (0.52 + i * 0.16), 22 + i * 16, col, seed + i));
     fillGround(ground, (x) => h * 0.9);
+  } else if (kind === 'bottomland') {
+    // The Little Sunflower River bottoms in November 1902: oak, ash and cypress, the woods
+    // "choked" with undergrowth and canebrake, and a slough of standing water.
+    const layers = [['#C2B7A8', '#CDBFA8'], ['#8E6A45', '#A0703F', '#7A6A55'], ['#7A4A2D', '#94643A', '#5E5240']];
+    layers.forEach((cols, i) => {
+      const base = h * (0.52 + i * 0.13), r = 16 + i * 10;
+      for (let x = -20; x < w + 20; x += r * rand(0.7, 1.1)) {
+        const y = base + (n2(x / 120 + i * 5) - 0.5) * r;
+        if (Math.random() < 0.45) { g.strokeStyle = `rgba(78,68,56,${0.35 + i * 0.2})`; g.lineWidth = 1 + i; g.beginPath(); g.moveTo(x, y); g.lineTo(x + rand(-4, 4), y + (h - y) * rand(0.5, 0.8)); g.stroke(); }
+        g.fillStyle = cols[Math.floor(rand(0, cols.length))];
+        for (let k = 0; k < 4; k++) blob(g, x + rand(-r, r) * 0.5, y - r * rand(0.6, 1.4), r * rand(0.55, 0.9));
+      }
+    });
+    // slough
+    const sy = h * 0.86;
+    const sg = g.createLinearGradient(0, sy, 0, h); sg.addColorStop(0, '#7E8A86'); sg.addColorStop(1, '#4E5A55');
+    g.fillStyle = sg; g.beginPath(); g.ellipse(w * 0.62, sy + 10, w * 0.22, 16, 0, 0, 7); g.fill();
+    // cane and tangled undergrowth across the lower third
+    for (let x = 0; x < w; x += rand(2, 5)) {
+      if (Math.abs(x - w * 0.62) < w * 0.18 && Math.random() < 0.7) continue;
+      const hh = rand(h * 0.12, h * 0.32), lean = rand(-6, 6);
+      g.strokeStyle = Math.random() < 0.5 ? '#6E7A3E' : '#8A8A4A'; g.lineWidth = rand(1, 2.2);
+      g.beginPath(); g.moveTo(x, h); g.quadraticCurveTo(x + lean / 2, h - hh / 2, x + lean, h - hh); g.stroke();
+      if (Math.random() < 0.25) { g.beginPath(); g.moveTo(x + lean, h - hh); g.lineTo(x + lean + rand(6, 14), h - hh + rand(2, 8)); g.stroke(); }
+    }
+    g.strokeStyle = 'rgba(70,60,40,.5)'; g.lineWidth = 1;
+    for (let i = 0; i < 60; i++) { const x = rand(0, w), y = rand(h * 0.7, h); g.beginPath(); g.moveTo(x, y); g.bezierCurveTo(x + rand(-30, 30), y - rand(10, 30), x + rand(-30, 30), y - rand(0, 20), x + rand(-40, 40), y); g.stroke(); } // vines
+    fillGround(ground, () => h * 0.92);
+  } else if (kind === 'hills') {
+    // Santiago, July 1, 1898: a distant mountain line, open grassy hills, palms down in the valley.
+    ridge(g, w, h, (x) => h * 0.3 + fbm(n3, x / 160 + 4) * h * 0.18, '#A9B8C2'); // the mountains around the Santiago plain
+    const greens = ['#8FB89A', '#6FA068', '#4E8A4E'];
+    greens.forEach((col, i) => {
+      const f = (x) => h * (0.46 + i * 0.12) - Math.max(0, Math.sin(x / (w * 0.22) + i * 1.7)) * h * (0.14 - i * 0.03) + (fbm(n2, x / 90 + i * 9) - 0.5) * h * 0.03;
+      g.fillStyle = col; g.fill(shape(w, h, f));
+    });
+    // valley floor: low jungle with scattered palms towering above it
+    const vf = (x) => h * 0.84 + (fbm(n, x / 70) - 0.5) * h * 0.06;
+    g.fillStyle = '#2E5E3E'; g.fill(shape(w, h, vf));
+    g.fillStyle = '#3E7A44'; for (let x = 0; x < w; x += rand(10, 24)) blob(g, x, vf(x) + 2, rand(6, 12));
+    for (let x = rand(20, 90); x < w; x += rand(70, 170)) palm(g, x, vf(x) + 4, rand(34, 52), '#244A30');
+    fillGround(ground, () => h * 0.95);
   } else if (kind === 'sea') {
     ridge(g, w, h, (x) => h * 0.55 + fbm(n, x / 200) * h * 0.18, night ? '#183326' : '#5E8A63');
     water = h * 0.72;
@@ -231,6 +273,30 @@ export function pronghorn(g, x, y, s, ph) {
   g.strokeStyle = INK; g.lineWidth = s * 0.035; g.beginPath(); g.moveTo(s * 0.47, -s * 0.98); g.lineTo(s * 0.45, -s * 1.12); g.stroke();
   g.restore();
 }
+function palm(g, x, y, s, col) {
+  g.strokeStyle = col; g.fillStyle = col; g.lineCap = 'round';
+  g.lineWidth = s * 0.07; g.beginPath(); g.moveTo(x, y); g.quadraticCurveTo(x + s * 0.12, y - s * 0.5, x + s * 0.05, y - s); g.stroke();
+  for (let k = 0; k < 6; k++) {
+    const a = -Math.PI / 2 + (k - 2.5) * 0.55, tx = x + s * 0.05 + Math.cos(a) * s * 0.55, ty = y - s + Math.sin(a) * s * 0.35 + s * 0.12;
+    g.lineWidth = s * 0.05; g.beginPath(); g.moveTo(x + s * 0.05, y - s); g.quadraticCurveTo((x + tx) / 2, y - s * 1.12, tx, ty); g.stroke();
+  }
+}
+
+// A wild horse, mane and tail moving with its gait.
+export function horse(g, x, y, s, ph, col = '#4A3324') {
+  g.save(); g.translate(x, y); g.fillStyle = col; g.strokeStyle = col; g.lineCap = 'round';
+  [[-s * 0.32, 0], [s * 0.3, Math.PI], [-s * 0.22, Math.PI], [s * 0.38, 0]].forEach(([lx, o]) => {
+    g.lineWidth = s * 0.07; g.beginPath(); g.moveTo(lx, -s * 0.45); g.lineTo(lx + Math.sin(ph + o) * s * 0.16, -s * 0.16); g.lineTo(lx + Math.sin(ph + o) * s * 0.2, 0); g.stroke();
+  });
+  g.beginPath(); g.ellipse(0, -s * 0.55, s * 0.42, s * 0.17, 0, 0, 7); g.fill();
+  g.lineWidth = s * 0.15; g.beginPath(); g.moveTo(s * 0.32, -s * 0.62); g.lineTo(s * 0.5, -s * 0.92); g.stroke(); // neck
+  g.beginPath(); g.ellipse(s * 0.6, -s * 0.9, s * 0.15, s * 0.07, 0.6, 0, 7); g.fill(); // head
+  g.strokeStyle = '#2A1E16'; g.lineWidth = s * 0.05;
+  g.beginPath(); g.moveTo(s * 0.48, -s * 0.98); g.quadraticCurveTo(s * 0.32, -s * 0.8 + Math.sin(ph) * s * 0.03, s * 0.28, -s * 0.66); g.stroke(); // mane
+  g.beginPath(); g.moveTo(-s * 0.4, -s * 0.6); g.quadraticCurveTo(-s * 0.6, -s * 0.5 + Math.sin(ph * 1.3) * s * 0.06, -s * 0.55, -s * 0.25); g.stroke(); // tail
+  g.restore();
+}
+
 export function hiker(g, x, y, s, ph) {
   g.save(); g.translate(x, y); g.strokeStyle = INK; g.fillStyle = INK; g.lineCap = 'round'; g.lineWidth = s * 0.09;
   const sw = Math.sin(ph) * s * 0.16;
@@ -297,7 +363,7 @@ const COMBOS = [[C.forest, C.yellow], [C.night, C.pink], [C.orange, C.night], [C
 export async function typeBands(s, lines, opts = {}) {
   const style = document.createElement('style');
   style.textContent = `
-  .bands{position:absolute;left:0;right:0;top:${opts.top || '30%'};display:flex;flex-direction:column;align-items:center;gap:.06em;
+  .bands{position:absolute;z-index:20;left:0;right:0;top:${opts.top || '30%'};display:flex;flex-direction:column;align-items:center;gap:.06em;
     font:700 clamp(54px,11vw,170px)/.84 "Dharma Gothic E",Impact,"Arial Narrow",sans-serif;text-transform:uppercase;letter-spacing:.005em;
     transform:translateY(-50%) rotate(-4deg)}
   .band{position:relative;padding:.06em .22em .02em;white-space:nowrap;box-shadow:0 18px 40px rgba(9,42,77,.18)}

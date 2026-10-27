@@ -49,6 +49,7 @@ h2{margin:0 0 6px;font:700 30px/1 "Dharma Gothic E",Impact,"Arial Narrow",sans-s
 p{margin:0}
 a{display:inline-block;margin-top:10px;color:${C.yellow};font:700 14px/1.2 Frutiger,Arial,Helvetica,sans-serif;text-decoration:underline;text-underline-offset:3px}
 .quiet a{color:${C.forest}}
+small{display:block;margin-top:8px;font:11px/1.3 Frutiger,Arial,Helvetica,sans-serif;opacity:.7}
 a:focus-visible,button:focus-visible{outline:2px solid ${C.yellow};outline-offset:2px}
 button{position:absolute;top:8px;right:8px;width:32px;height:32px;border:0;border-radius:50%;background:transparent;color:inherit;
   font:24px/1 Arial,sans-serif;cursor:pointer;opacity:.75}
@@ -217,8 +218,12 @@ function banner(root, egg, ctx, onClose, obs) {
   card.setAttribute('role', 'status');
   card.setAttribute('aria-live', 'polite');
   const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  // Photo credits, when a photo version is playing and the photo needs one.
+  const photos = egg.options && egg.options.photo && ctx.style !== 'painted' ? [].concat(egg.options.photo) : [];
+  const credits = [...new Set(photos.map((p) => p.credit).filter(Boolean))];
   card.innerHTML = `<h2>${esc(egg.headline)}</h2>${egg.text ? `<p>${esc(egg.text)}</p>` : ''}` +
     (egg.link ? `<a href="${esc(egg.link.href)}">${esc(egg.link.label)}</a>` : '') +
+    (credits.length ? `<small>${credits.map(esc).join(' · ')}</small>` : '') +
     `<button type="button" aria-label="Close">×</button>`;
   root.appendChild(card);
   if (obs && obs.length) place(card, ctx.position || 'top', obs);

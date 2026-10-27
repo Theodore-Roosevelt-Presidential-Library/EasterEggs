@@ -33,8 +33,11 @@
       "rule": {
         "date": "07-01"
       },
-      "effect": "type",
+      "effect": "scene",
       "options": {
+        "kind": "hills",
+        "time": "dawn",
+        "sun": true,
         "lines": [
           "KETTLE HILL",
           "JULY 1, 1898"
@@ -46,7 +49,7 @@
         "label": "Read the story",
         "href": "https://www.trlibrary.com/tr"
       },
-      "notes": "HistorianPanel 2026-10-27: closed (Rough Riders ch. IV; 9th Cavalry Troop H report). Other regiments charged alongside; copy does not say the Rough Riders went alone. Keep 'Kettle Hill', not 'San Juan Hill'.",
+      "notes": "HistorianPanel 2026-10-27: closed (Rough Riders ch. IV; 9th Cavalry Troop H report). Other regiments charged alongside; copy does not say the Rough Riders went alone. Keep 'Kettle Hill', not 'San Juan Hill'. Period visuals checked 2026-10-27: green hills, palms in the valley, distant mountains and sunrise match T.R.'s and Richard Harding Davis's accounts; no people, flags or buildings; nothing implies the charge came at sunrise.",
       "priority": 30,
       "enabled": true,
       "review": "ok"
@@ -76,7 +79,7 @@
       "rule": {
         "date": "12-10"
       },
-      "effect": "type",
+      "effect": "branch",
       "options": {
         "lines": [
           "NOBEL",
@@ -101,8 +104,11 @@
       "rule": {
         "date": "11-14"
       },
-      "effect": "type",
+      "effect": "scene",
       "options": {
+        "kind": "bottomland",
+        "time": "day",
+        "leaves": true,
         "lines": [
           "THE BEAR",
           "HE WOULDN'T",
@@ -117,7 +123,8 @@
       },
       "priority": 30,
       "enabled": true,
-      "review": "ok"
+      "review": "ok",
+      "notes": "Period visuals checked 2026-10-27: oak, ash and cypress bottomland 'choked' with undergrowth and canebrake, with a slough (1902 Smedes, Miss. wire report). No bear, hunters or people shown. Leaf colors are plausible but undocumented, so kept muted."
     },
     {
       "id": "badlands-arrival",
@@ -131,7 +138,11 @@
       "options": {
         "kind": "badlands",
         "time": "dawn",
-        "life": "train"
+        "life": "train",
+        "photo": {
+          "src": "img/golden-prairie.webp",
+          "focus": 62
+        }
       },
       "headline": "Welcome to the Badlands",
       "text": "In September 1883, a young New Yorker stepped off the train at Little Missouri, Dakota Territory, to hunt bison.",
@@ -158,7 +169,11 @@
         "lines": [
           "NORTH DAKOTA",
           "1889"
-        ]
+        ],
+        "photo": {
+          "src": "img/badlands-overlook.webp",
+          "focus": 50
+        }
       },
       "headline": "Happy Statehood Day, North Dakota",
       "text": "North Dakota joined the Union on November 2, 1889.",
@@ -199,8 +214,25 @@
       "rule": {
         "date": "06-08"
       },
-      "effect": "type",
+      "effect": "scene",
       "options": {
+        "montage": [
+          "tower",
+          "canyon"
+        ],
+        "time": "day",
+        "photo": [
+          {
+            "src": "img/devils-tower.webp",
+            "focus": 0,
+            "credit": "Photo: National Park Service"
+          },
+          {
+            "src": "img/grand-canyon.webp",
+            "focus": 45,
+            "credit": "Photo: Grand Canyon National Park (NPS)"
+          }
+        ],
         "lines": [
           "ANTIQUITIES",
           "ACT",
@@ -227,7 +259,12 @@
       "effect": "scene",
       "options": {
         "kind": "tower",
-        "time": "dusk"
+        "time": "dusk",
+        "photo": {
+          "src": "img/devils-tower.webp",
+          "focus": 0,
+          "credit": "Photo: National Park Service"
+        }
       },
       "headline": "September 24, 1906",
       "text": "Roosevelt proclaimed Wyoming's Devils Tower the first national monument.",
@@ -249,7 +286,12 @@
       "effect": "scene",
       "options": {
         "kind": "canyon",
-        "time": "day"
+        "time": "day",
+        "photo": {
+          "src": "img/grand-canyon.webp",
+          "focus": 45,
+          "credit": "Photo: Grand Canyon National Park (NPS)"
+        }
       },
       "headline": "January 11, 1908",
       "text": "Roosevelt protected the Grand Canyon as a national monument. It became a national park in 1919.",
@@ -293,7 +335,11 @@
       "effect": "scene",
       "options": {
         "kind": "prairie",
-        "time": "day"
+        "time": "day",
+        "photo": {
+          "src": "img/golden-juniper.webp",
+          "focus": 60
+        }
       },
       "headline": "Happy Earth Day",
       "text": "The land Roosevelt protected is still yours to explore. Get outside today.",
@@ -338,8 +384,31 @@
       "rule": {
         "date": "08-25"
       },
-      "effect": "type",
+      "effect": "scene",
       "options": {
+        "montage": [
+          "badlands",
+          "canyon",
+          "tower",
+          "forest"
+        ],
+        "time": "day",
+        "photo": [
+          {
+            "src": "img/badlands-overlook.webp",
+            "focus": 50
+          },
+          {
+            "src": "img/grand-canyon.webp",
+            "focus": 45,
+            "credit": "Photo: Grand Canyon National Park (NPS)"
+          },
+          {
+            "src": "img/devils-tower.webp",
+            "focus": 0,
+            "credit": "Photo: National Park Service"
+          }
+        ],
         "lines": [
           "HAPPY BIRTHDAY,",
           "NATIONAL",
@@ -363,8 +432,15 @@
       "rule": {
         "date": "04-25"
       },
-      "effect": "type",
+      "effect": "scene",
       "options": {
+        "kind": "badlands",
+        "time": "dusk",
+        "life": "horses",
+        "photo": {
+          "src": "img/scoria-butte.webp",
+          "focus": 40
+        },
         "lines": [
           "THEODORE ROOSEVELT",
           "NATIONAL MEMORIAL PARK",
@@ -389,8 +465,15 @@
       "rule": {
         "date": "11-10"
       },
-      "effect": "type",
+      "effect": "scene",
       "options": {
+        "kind": "badlands",
+        "time": "day",
+        "life": "bison",
+        "photo": {
+          "src": "img/painted-canyon-wide.webp",
+          "focus": 58
+        },
         "lines": [
           "THEODORE ROOSEVELT",
           "NATIONAL PARK",
@@ -423,10 +506,14 @@
       "options": {
         "kind": "badlands",
         "time": "day",
-        "life": "hiker"
+        "life": "hiker",
+        "photo": {
+          "src": "img/hikers-ridge.webp",
+          "focus": 55
+        }
       },
       "headline": "Happy National Public Lands Day",
-      "text": "Find the places Roosevelt protected, and go see one.",
+      "text": "Find the places Roosevelt protected, and go exploring.",
       "link": {
         "label": "Explore the Public Lands Map",
         "href": "https://publiclands.labs.trlibrary.com"
@@ -450,7 +537,12 @@
       "options": {
         "kind": "river",
         "time": "dawn",
-        "life": "canoe"
+        "life": "canoe",
+        "photo": {
+          "src": "img/little-missouri.webp",
+          "focus": 40,
+          "credit": "Photo: Acroterion, CC BY-SA 4.0, via Wikimedia Commons"
+        }
       },
       "headline": "Happy National Hunting and Fishing Day",
       "text": "Hunters and anglers were some of Roosevelt's strongest allies in conservation.",
@@ -526,7 +618,12 @@
       "options": {
         "kind": "badlands",
         "time": "day",
-        "life": "pronghorn"
+        "life": "pronghorn",
+        "photo": {
+          "src": "img/prairie.webp",
+          "focus": 55,
+          "credit": "Photo: Acroterion, CC BY-SA 4.0, via Wikimedia Commons"
+        }
       },
       "headline": "Happy World Wildlife Day",
       "text": "Pronghorn, bison and wild horses still roam the Badlands Roosevelt knew.",
@@ -549,7 +646,12 @@
       "options": {
         "kind": "badlands",
         "time": "day",
-        "life": "bison"
+        "life": "bison",
+        "photo": {
+          "src": "img/bison-herd.webp",
+          "focus": 58,
+          "credit": "Photo: Michael Holley, CC0, via Wikimedia Commons"
+        }
       },
       "headline": "May 9, 2016",
       "text": "The bison became the national mammal of the United States. Bison first brought Roosevelt to the Badlands in 1883.",
@@ -577,7 +679,12 @@
         "kind": "badlands",
         "time": "dusk",
         "life": "bison",
-        "count": 8
+        "count": 8,
+        "photo": {
+          "src": "img/bison-herd.webp",
+          "focus": 40,
+          "credit": "Photo: Michael Holley, CC0, via Wikimedia Commons"
+        }
       },
       "headline": "Happy National Bison Day",
       "text": "Bison first brought Roosevelt to the Badlands in 1883. You can still see them in Theodore Roosevelt National Park.",
@@ -604,7 +711,12 @@
       "options": {
         "kind": "river",
         "time": "day",
-        "life": "canoe"
+        "life": "canoe",
+        "photo": {
+          "src": "img/little-missouri.webp",
+          "focus": 40,
+          "credit": "Photo: Acroterion, CC BY-SA 4.0, via Wikimedia Commons"
+        }
       },
       "headline": "Happy World Rivers Day",
       "text": "Roosevelt's Elkhorn Ranch sat on the banks of the Little Missouri River.",
@@ -631,7 +743,11 @@
       "options": {
         "kind": "badlands",
         "time": "dawn",
-        "life": "hiker"
+        "life": "hiker",
+        "photo": {
+          "src": "img/hikers-trail.webp",
+          "focus": 55
+        }
       },
       "headline": "Happy National Trails Day",
       "text": "Roosevelt preached the strenuous life. Find a Badlands trail and take a hike.",
@@ -650,8 +766,15 @@
       "rule": {
         "date": "07-31"
       },
-      "effect": "type",
+      "effect": "scene",
       "options": {
+        "kind": "badlands",
+        "time": "day",
+        "life": "hiker",
+        "photo": {
+          "src": "img/badlands-overlook.webp",
+          "focus": 50
+        },
         "lines": [
           "THANK YOU,",
           "RANGERS"
@@ -697,12 +820,20 @@
       "rule": {
         "date": "09-09"
       },
-      "effect": "type",
+      "effect": "confetti",
       "options": {
         "lines": [
           "HAPPY",
           "TEDDY BEAR",
           "DAY"
+        ],
+        "colors": [
+          "#B07A4F",
+          "#D9A441",
+          "#E7805D",
+          "#F9D635",
+          "#8A5A36",
+          "#D1CCBD"
         ]
       },
       "headline": "Happy National Teddy Bear Day",
@@ -744,8 +875,14 @@
       "rule": {
         "date": "05-18"
       },
-      "effect": "type",
+      "effect": "scene",
       "options": {
+        "kind": "badlands",
+        "time": "dusk",
+        "photo": {
+          "src": "img/library-exterior.webp",
+          "focus": 55
+        },
         "lines": [
           "MUSEUM",
           "DAY"
@@ -772,7 +909,7 @@
           4
         ]
       },
-      "effect": "type",
+      "effect": "flag",
       "options": {
         "lines": [
           "STEP INTO",
@@ -796,12 +933,9 @@
       "rule": {
         "date": "09-17"
       },
-      "effect": "type",
+      "effect": "ink",
       "options": {
-        "lines": [
-          "WE THE",
-          "PEOPLE"
-        ]
+        "words": "We the People"
       },
       "headline": "Happy Constitution Day",
       "text": "The Constitution was signed on September 17, 1787.",
@@ -820,7 +954,7 @@
       "rule": {
         "election": true
       },
-      "effect": "type",
+      "effect": "flag",
       "options": {
         "lines": [
           "STEP INTO",
@@ -848,7 +982,7 @@
           3
         ]
       },
-      "effect": "type",
+      "effect": "flag",
       "options": {
         "lines": [
           "26TH",

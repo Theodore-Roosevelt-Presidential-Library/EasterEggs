@@ -17,6 +17,7 @@
     '^/(donate|give|support/donate|checkout|cart|tickets|user|admin)(/|$)|/edit$|/node/add');
   var AUTOPLAY = attr('autoplay') !== 'off';
   var POSITION = attr('position') || 'top';
+  var STYLE = attr('style') === 'painted' ? 'painted' : 'photo'; // photo whenever a delight has one
 
   var qs = new URLSearchParams(location.search);
   var store = {
@@ -99,7 +100,7 @@
       var full = {};
       for (var k in egg) full[k] = egg[k];
       for (k in res[0]) full[k] = res[0][k];
-      return res[1].default(full, { base: BASE, position: (opts && opts.position) || POSITION, avoid: attr('avoid'), preview: !!(opts && opts.preview) });
+      return res[1].default(full, { base: BASE, position: (opts && opts.position) || POSITION, style: (opts && opts.style) || STYLE, avoid: attr('avoid'), preview: !!(opts && opts.preview) });
     }).then(function () { running = false; return true; }, function (err) {
       running = false; if (window.console) console.warn('[TRPL delight]', err); return false;
     });
