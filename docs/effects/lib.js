@@ -64,7 +64,12 @@ export async function play(egg, ctx, animate) {
   loadFonts();
   const host = document.createElement('div');
   host.setAttribute('data-trpl-delight', egg.id);
-  host.style.cssText = 'position:fixed;inset:0;pointer-events:none;z-index:2147483000';
+  // Stay underneath anything the site pins to the screen (ticket button, chat, cookie bar)
+  // so those stay visible and clickable while a delight plays.
+  const obs = obstacles(ctx.avoid);
+  const zs = obs.map((o) => o.z).filter((z) => z > 1);
+  const z = zs.length ? Math.max(2, Math.min(...zs) - 1) : 2147483000;
+  host.style.cssText = `position:fixed;inset:0;pointer-events:none;z-index:${z}`;
   const root = host.attachShadow({ mode: 'open' });
   root.innerHTML = `<style>${CSS}</style><div class="stage"></div>`;
   document.body.appendChild(host);
@@ -114,7 +119,7 @@ export async function play(egg, ctx, animate) {
     }
   };
 
-  const card = egg.headline ? banner(root, egg, ctx, () => close()) : null;
+  const card = egg.headline ? banner(root, egg, ctx, () => close(), obs) : null;
   track('delight_view', egg);
 
   function close() {
@@ -143,9 +148,72 @@ export async function play(egg, ctx, animate) {
   await sleep(450);
 }
 
-function banner(root, egg, ctx, onClose) {
+// Everything the site has pinned to the screen: fixed or sticky elements that are visible and
+// not page-sized, plus anything matching data-avoid on the script tag.
+function obstacles(avoid) {
+  const W = vw(), H = vh(), out = [];
+  const add = (el, forced) => {
+    if (el.closest('[data-trpl-delight]')) return;
+    const r = el.getBoundingClientRect();
+    if (r.width < 4 || r.height < 4 || r.bottom <= 0 || r.top >= H || r.right <= 0 || r.left >= W) return;
+    if (!forced && r.width * r.height > W * H * 0.5) return; // a page-sized wrapper, not a widget
+    const s = getComputedStyle(el);
+    if (s.visibility === 'hidden' || +s.opacity === 0) return;
+    out.push({ left: r.left, top: r.top, right: r.right, bottom: r.bottom, z: parseInt(s.zIndex, 10) || 0 });
+  };
+  for (const el of document.body.querySelectorAll('*')) {
+    const p = getComputedStyle(el).position;
+    if (p === 'fixed' || p === 'sticky') add(el, false);
+  }
+  if (avoid) { try { document.querySelectorAll(avoid).forEach((el) => add(el, true)); } catch (e) {} }
+  return out;
+}
+
+// Puts the card where it won't cover anything the site has pinned to the screen. Top center
+// (the default) drops below a sticky header if there is one; a bottom corner rises above a
+// pinned ticket button or chat bubble. Failing that, it tries the other spots.
+function place(card, preferred, obs) {
+  const W = vw(), H = vh(), gap = 16, w = card.offsetWidth, h = card.offsetHeight, pad = 8;
+  const narrow = W <= 600;
+  const spots = {
+    'bottom-left': { left: gap, top: H - gap - h },
+    'bottom-right': { left: narrow ? gap : W - gap - w, top: H - gap - h },
+    top: { left: (W - w) / 2, top: gap }
+  };
+  const hits = (s) => obs.some((o) => s.left < o.right + pad && s.left + w > o.left - pad && s.top < o.bottom + pad && s.top + h > o.top - pad);
+  let pick = null, lift = 0, drop = 0;
+  if (preferred === 'top') {
+    if (!hits(spots.top)) pick = 'top';
+    else {
+      // A sticky header is in the way: sit just below it.
+      const above = obs.filter((o) => o.bottom < H * 0.4 && spots.top.left < o.right && spots.top.left + w > o.left);
+      const below = { left: spots.top.left, top: Math.max(...above.map((o) => o.bottom), 0) + gap };
+      if (above.length && !hits(below)) { pick = 'top'; drop = below.top; }
+    }
+    if (!pick) pick = ['bottom-left', 'bottom-right'].find((k) => !hits(spots[k]));
+  } else {
+    const other = preferred === 'bottom-right' ? 'bottom-left' : 'bottom-right';
+    pick = [preferred, other].find((k) => !hits(spots[k]));
+    if (!pick) {
+      // Sit just above whatever is pinned in the preferred corner, if that still leaves room.
+      const s = spots[preferred];
+      const under = obs.filter((o) => s.left < o.right + pad && s.left + w > o.left - pad && o.top > H * 0.5);
+      const top = under.length ? Math.min(...under.map((o) => o.top)) : H;
+      const raised = { left: s.left, top: top - gap - h };
+      if (raised.top > H * 0.25 && !hits(raised)) { pick = preferred; lift = H - top; }
+    }
+    if (!pick && !hits(spots.top)) pick = 'top';
+  }
+  if (!pick) pick = preferred;
+  card.classList.remove('bottom-left', 'bottom-right', 'top');
+  card.classList.add(pick);
+  if (lift) card.style.bottom = `${lift + gap}px`;
+  if (drop) card.style.top = `${drop}px`;
+}
+
+function banner(root, egg, ctx, onClose, obs) {
   const card = document.createElement('div');
-  card.className = `card ${ctx.position || 'bottom-left'}${egg.kind === 'quiet' ? ' quiet' : ''}`;
+  card.className = `card ${ctx.position || 'top'}${egg.kind === 'quiet' ? ' quiet' : ''}`;
   card.setAttribute('role', 'status');
   card.setAttribute('aria-live', 'polite');
   const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
@@ -153,6 +221,7 @@ function banner(root, egg, ctx, onClose) {
     (egg.link ? `<a href="${esc(egg.link.href)}">${esc(egg.link.label)}</a>` : '') +
     `<button type="button" aria-label="Close">×</button>`;
   root.appendChild(card);
+  if (obs && obs.length) place(card, ctx.position || 'top', obs);
   card.querySelector('button').addEventListener('click', () => { track('delight_close', egg); onClose(); });
   const a = card.querySelector('a');
   if (a) a.addEventListener('click', () => track('delight_click', egg, { delight_link: egg.link.href }));

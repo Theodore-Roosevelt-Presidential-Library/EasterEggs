@@ -46,9 +46,10 @@
         "label": "Read the story",
         "href": "https://www.trlibrary.com/tr"
       },
+      "notes": "HistorianPanel 2026-10-27: closed (Rough Riders ch. IV; 9th Cavalry Troop H report). Other regiments charged alongside; copy does not say the Rough Riders went alone. Keep 'Kettle Hill', not 'San Juan Hill'.",
       "priority": 30,
-      "enabled": false,
-      "review": "Run through HistorianPanel (sp-navy-rough-riders) and confirm the link."
+      "enabled": true,
+      "review": "ok"
     },
     {
       "id": "independence-day",
@@ -123,8 +124,9 @@
       "title": "T.R. arrives in the Badlands",
       "kind": "anniversary",
       "rule": {
-        "date": "09-08"
+        "date": "09-07"
       },
+      "span": 2,
       "effect": "scene",
       "options": {
         "kind": "badlands",
@@ -137,9 +139,10 @@
         "label": "Plan a visit",
         "href": "https://www.trlibrary.com/visit"
       },
+      "notes": "HistorianPanel 2026-10-27: station (Little Missouri, Dakota Territory) and purpose (to hunt bison) closed. Exact day unresolved: Hagedorn and the TR Center put the 2-3 a.m. arrival on Sept 7, Morris and the NPS handbook on Sept 8; T.R.'s first letter home is datelined 'Little Missouri, Da. Sept 8th 1883'. Runs Sept 7-8 and the copy names only the month. Curator question: read the body of the Sept 8 letter (Houghton MS Am 1541.9 (64-111); TR Center o283352) for when the train set him down.",
       "priority": 30,
-      "enabled": false,
-      "review": "Confirm the arrival date (September 7 or 8, 1883) with HistorianPanel (sp-badlands) before turning on."
+      "enabled": true,
+      "review": "ok"
     },
     {
       "id": "nd-statehood",
@@ -369,14 +372,15 @@
         ]
       },
       "headline": "April 25, 1947",
-      "text": "Congress set aside Theodore Roosevelt National Memorial Park in the Badlands where he ranched.",
+      "text": "Congress set aside Theodore Roosevelt National Memorial Park in the Badlands, including the site of his Elkhorn Ranch.",
       "link": {
         "label": "Plan a park visit",
         "href": "https://www.trlibrary.com/visit"
       },
+      "notes": "HistorianPanel 2026-10-27: 61 Stat. 52, approved April 25, 1947. The 1947 park covered roughly today's South Unit plus the Elkhorn site; the North Unit came in 1948.",
       "priority": 20,
-      "enabled": false,
-      "review": "Confirm the date with HistorianPanel (sp-nps-sites)."
+      "enabled": true,
+      "review": "ok"
     },
     {
       "id": "trnp-national-park",
@@ -399,9 +403,10 @@
         "label": "Plan a park visit",
         "href": "https://www.trlibrary.com/visit"
       },
+      "notes": "HistorianPanel 2026-10-27: Pub. L. 95-625 sec. 610, approved November 10, 1978 (renaming only).",
       "priority": 20,
-      "enabled": false,
-      "review": "Confirm the date with HistorianPanel (sp-nps-sites)."
+      "enabled": true,
+      "review": "ok"
     },
     {
       "id": "public-lands-day",
@@ -500,14 +505,15 @@
         "kind": "flock"
       },
       "headline": "Happy World Migratory Bird Day",
-      "text": "Roosevelt was a lifelong birder, and he protected more than 50 bird reservations.",
+      "text": "Roosevelt was a lifelong birder. As President, he established more than 50 federal bird reservations.",
       "link": {
         "label": "Read more",
         "href": "https://www.trlibrary.com/tr"
       },
+      "notes": "HistorianPanel 2026-10-27: 51 bird reservations, Mar 14, 1903 to Mar 2, 1909 (Biological Survey Circular 87, 1912; matches the Autobiography). Do not use the figure 55, which includes 4 game preserves.",
       "priority": 20,
-      "enabled": false,
-      "review": "Confirm the bird reservation count with HistorianPanel (sp-conservation)."
+      "enabled": true,
+      "review": "ok"
     },
     {
       "id": "world-wildlife-day",
@@ -726,9 +732,10 @@
         "label": "Read more",
         "href": "https://www.trlibrary.com/tr"
       },
+      "notes": "HistorianPanel 2026-10-27: 'dozens' holds under every count (about 35 to 45 depending on what counts as a book). Never state an exact number without defining it.",
       "priority": 20,
-      "enabled": false,
-      "review": "Confirm 'dozens of books' with HistorianPanel (sp-author)."
+      "enabled": true,
+      "review": "ok"
     },
     {
       "id": "museum-day",

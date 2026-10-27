@@ -12,14 +12,15 @@ One Custom HTML tag in Google Tag Manager, firing on All Pages:
 
 On a normal day the tag loads one small file (about 3 KB gzipped) that checks the date and stops. On a delight's day, it loads only that delight's words (a few hundred bytes) and its effect (5 to 15 KB). Everything waits until the page has finished loading.
 
-Each delight plays once per visit. It can be closed, never plays sound, and never plays inside an embedded frame or on donate, checkout, ticketing, account or admin pages. Visitors who have reduced motion turned on see the message card without the animation.
+Each delight plays once per visit. It can be closed, never plays sound, and never plays inside an embedded frame or on donate, checkout, ticketing, account or admin pages. Visitors who have reduced motion turned on see the message card without the animation. The animation layer sits underneath anything the site pins to the screen, so a ticket button or chat bubble stays visible and clickable.
 
 | Option | Effect |
 |---|---|
 | `?delight=<id>` on any page | Plays that delight right away, on any day |
 | `?delight-date=YYYY-MM-DD` | Acts as if it were that date |
 | `?delight=off` / `?delight=on` | Turns delights off or back on for the rest of the visit |
-| `data-position` on the tag | Where the message card sits: `bottom-left` (default), `bottom-right` or `top` |
+| `data-position` on the tag | Where the message card sits: `top` (default), `bottom-left` or `bottom-right`. It moves on its own to stay clear of anything pinned to the screen (a ticket button, chat bubble, cookie bar or sticky header) |
+| `data-avoid` on the tag | CSS selectors of other elements the card should stay clear of |
 | `data-exclude` on the tag | A pattern of page paths to skip, replacing the default list |
 
 Each delight pushes `delight_view`, `delight_click` and `delight_close` to the GTM data layer with `delight_id`.

@@ -114,7 +114,7 @@ footer{padding:40px 16px 60px;color:var(--muted);font:14px/1.5 var(--ui)}
         <p class="ui" style="margin:8px 0 12px;color:var(--muted)">Where the message card sits on the page.</p>
         <div class="row">
           <label class="ui" for="pos">Card position</label>
-          <select id="pos"><option value="bottom-left">Bottom left</option><option value="bottom-right">Bottom right</option><option value="top">Top center</option></select>
+          <select id="pos"><option value="top">Top center</option><option value="bottom-left">Bottom left</option><option value="bottom-right">Bottom right</option></select>
         </div>
         <p class="ui" style="margin:14px 0 0;color:var(--muted)">Visitors who have reduced motion turned on see the message without the animation. To check it here, turn on reduced motion in your system settings.</p>
       </div>
@@ -146,7 +146,7 @@ footer{padding:40px 16px 60px;color:var(--muted);font:14px/1.5 var(--ui)}
         <tr><td><code>?delight=tr-birthday</code></td><td>Add to any trlibrary.com address to play one delight right away, on any day.</td></tr>
         <tr><td><code>?delight-date=2027-07-04</code></td><td>Act as if it were that date.</td></tr>
         <tr><td><code>?delight=off</code></td><td>Turn delights off in this browser for the rest of the visit (<code>?delight=on</code> turns them back on).</td></tr>
-        <tr><td><code>data-position</code></td><td>On the script tag: <code>bottom-left</code> (default), <code>bottom-right</code> or <code>top</code>.</td></tr>
+        <tr><td><code>data-position</code></td><td>On the script tag: <code>top</code> (default), <code>bottom-left</code> or <code>bottom-right</code>. The card moves on its own to stay clear of anything pinned to the screen, like a ticket button or chat bubble.</td></tr>
         <tr><td><code>data-exclude</code></td><td>On the script tag: a pattern of page paths to skip, replacing the default list.</td></tr>
         <tr><td>Analytics</td><td>Each delight pushes <code>delight_view</code>, <code>delight_click</code> and <code>delight_close</code> to the GTM data layer with <code>delight_id</code>.</td></tr>
       </table>

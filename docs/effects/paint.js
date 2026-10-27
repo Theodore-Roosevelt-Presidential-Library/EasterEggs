@@ -305,6 +305,13 @@ export async function typeBands(s, lines, opts = {}) {
   s.root.appendChild(style);
   const wrap = s.add('', '');
   wrap.className = 'bands';
+  // When the message card sits at the top, start the bands just below it so they never overlap.
+  const card = s.root.querySelector('.card.top');
+  if (card) {
+    const below = card.getBoundingClientRect().bottom + 28;
+    wrap.style.top = `${Math.max(below, s.vh() * 0.22)}px`;
+    wrap.style.transform = 'rotate(-4deg)';
+  }
   const offset = Math.floor(Math.random() * COMBOS.length);
   const els = lines.map((t, i) => {
     const [bg, fg] = (opts.combos || COMBOS)[(i + offset) % COMBOS.length];
