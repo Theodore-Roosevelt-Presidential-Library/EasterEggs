@@ -24,7 +24,10 @@
       },
       "priority": 30,
       "enabled": true,
-      "review": "ok"
+      "review": "ok",
+      "since": 1858,
+      "ago": "Born {n} years ago today",
+      "milestone": "His {nth} birthday"
     },
     {
       "id": "kettle-hill",
@@ -55,7 +58,8 @@
       "notes": "HistorianPanel 2026-10-27: copy closed (Rough Riders ch. IV; 9th Cavalry Troop H report). Keep 'Kettle Hill', not 'San Juan Hill'. Charge scene checked 2026-10-27 (sp-period-visuals, sp-navy-rough-riders; T.R., The Rough Riders ch. I and IV; R. H. Davis, Notes of a War Correspondent; Morton, 3rd Cavalry report): T.R. mounted on Little Texas, orderly Bardshar just ahead, dismounting ~40 yards from the top at a wire fence; troopers on foot in slouch hats and shirtsleeves with Krag carbines, no bayonets or sabres; one plain red-over-white troop guidon (G, E and F troops' guidons were first planted); blue polka-dot havelock streaming behind his hat (Davis, single eyewitness); midday sun (advance ~12:15 p.m.); ranch buildings and a huge iron kettle on the crest, 'probably' for sugar. No hat-waving on the climb (he waved it at the foot, giving the order). Card copy revised 2026-10-27 (Pass A + blind Pass B: Rough Riders ch. IV; NARA Prologue; NPS Buffalo Soldiers): names the regulars, keeps the two charges distinct; 'main San Juan ridge' chosen over 'next ridge' because Kettle Hill is itself on the San Juan Heights.",
       "priority": 30,
       "enabled": true,
-      "review": "ok"
+      "review": "ok",
+      "since": 1898
     },
     {
       "id": "independence-day",
@@ -99,7 +103,8 @@
       },
       "priority": 30,
       "enabled": true,
-      "review": "ok"
+      "review": "ok",
+      "since": 1906
     },
     {
       "id": "teddy-bear",
@@ -128,7 +133,8 @@
       "priority": 30,
       "enabled": true,
       "review": "ok",
-      "notes": "Period visuals checked 2026-10-27: oak, ash and cypress bottomland 'choked' with undergrowth and canebrake, with a slough (1902 Smedes, Miss. wire report). No bear, hunters or people shown. Leaf colors are plausible but undocumented, so kept muted."
+      "notes": "Period visuals checked 2026-10-27: oak, ash and cypress bottomland 'choked' with undergrowth and canebrake, with a slough (1902 Smedes, Miss. wire report). No bear, hunters or people shown. Leaf colors are plausible but undocumented, so kept muted.",
+      "since": 1902
     },
     {
       "id": "badlands-arrival",
@@ -157,7 +163,8 @@
       "notes": "HistorianPanel 2026-10-27: station (Little Missouri, Dakota Territory) and purpose (to hunt bison) closed. Exact day unresolved: Hagedorn and the TR Center put the 2-3 a.m. arrival on Sept 7, Morris and the NPS handbook on Sept 8; T.R.'s first letter home is datelined 'Little Missouri, Da. Sept 8th 1883'. Runs Sept 7-8 and the copy names only the month. Curator question: read the body of the Sept 8 letter (Houghton MS Am 1541.9 (64-111); TR Center o283352) for when the train set him down.",
       "priority": 30,
       "enabled": true,
-      "review": "ok"
+      "review": "ok",
+      "since": 1883
     },
     {
       "id": "nd-statehood",
@@ -187,7 +194,8 @@
       },
       "priority": 30,
       "enabled": true,
-      "review": "ok"
+      "review": "ok",
+      "since": 1889
     },
     {
       "id": "pelican-island",
@@ -209,7 +217,8 @@
       },
       "priority": 30,
       "enabled": true,
-      "review": "ok"
+      "review": "ok",
+      "since": 1903
     },
     {
       "id": "antiquities-act",
@@ -251,7 +260,8 @@
       },
       "priority": 30,
       "enabled": true,
-      "review": "ok"
+      "review": "ok",
+      "since": 1906
     },
     {
       "id": "devils-tower",
@@ -278,7 +288,8 @@
       },
       "priority": 30,
       "enabled": true,
-      "review": "ok"
+      "review": "ok",
+      "since": 1906
     },
     {
       "id": "grand-canyon",
@@ -305,7 +316,8 @@
       },
       "priority": 30,
       "enabled": true,
-      "review": "ok"
+      "review": "ok",
+      "since": 1908
     },
     {
       "id": "forest-service",
@@ -327,7 +339,8 @@
       },
       "priority": 30,
       "enabled": true,
-      "review": "ok"
+      "review": "ok",
+      "since": 1905
     },
     {
       "id": "earth-day",
@@ -428,7 +441,8 @@
       },
       "priority": 20,
       "enabled": true,
-      "review": "ok"
+      "review": "ok",
+      "since": 1916
     },
     {
       "id": "trnp-memorial-park",
@@ -461,7 +475,8 @@
       "notes": "HistorianPanel 2026-10-27: 61 Stat. 52, approved April 25, 1947. The 1947 park covered roughly today's South Unit plus the Elkhorn site; the North Unit came in 1948.",
       "priority": 20,
       "enabled": true,
-      "review": "ok"
+      "review": "ok",
+      "since": 1947
     },
     {
       "id": "trnp-national-park",
@@ -494,7 +509,8 @@
       "notes": "HistorianPanel 2026-10-27: Pub. L. 95-625 sec. 610, approved November 10, 1978 (renaming only).",
       "priority": 20,
       "enabled": true,
-      "review": "ok"
+      "review": "ok",
+      "since": 1978
     },
     {
       "id": "public-lands-day",
@@ -667,7 +683,8 @@
       },
       "priority": 20,
       "enabled": true,
-      "review": "ok"
+      "review": "ok",
+      "since": 2016
     },
     {
       "id": "bison-day",
@@ -817,7 +834,8 @@
       },
       "priority": 20,
       "enabled": true,
-      "review": "ok"
+      "review": "ok",
+      "since": 1914
     },
     {
       "id": "teddy-bear-day",
@@ -953,14 +971,16 @@
       "priority": 20,
       "enabled": true,
       "review": "ok",
-      "notes": "HistorianPanel 2026-10-27: signed Sept. 17, 1787 (dating clause). Script image from NARA NAID 1667751 (engrossed parchment, RG 11) via Wikimedia/DPLA, public domain."
+      "notes": "HistorianPanel 2026-10-27: signed Sept. 17, 1787 (dating clause). Script image from NARA NAID 1667751 (engrossed parchment, RG 11) via Wikimedia/DPLA, public domain.",
+      "since": 1787
     },
     {
       "id": "election-day",
       "title": "Election Day",
       "kind": "civic",
       "rule": {
-        "election": true
+        "election": true,
+        "even": true
       },
       "effect": "flag",
       "options": {
@@ -975,9 +995,10 @@
         "label": "Find your polling place at vote.gov",
         "href": "https://vote.gov"
       },
-      "priority": 25,
+      "priority": 32,
       "enabled": true,
-      "review": "ok"
+      "review": "ok",
+      "notes": "2026-10-27: even years only (federal general elections), at Matt's direction."
     },
     {
       "id": "presidents-day",

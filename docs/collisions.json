@@ -1,0 +1,74 @@
+{
+  "migratory-bird-day > national-mammal": {
+    "note": "Accepted 2026-10-27. Top plays first, the rest on later page views.",
+    "days": [
+      "2026-05-09"
+    ]
+  },
+  "public-lands-day > hunting-fishing-day": {
+    "note": "Both are the 4th Saturday of September, every year. Public Lands Day plays first; Hunting and Fishing Day on the next page view.",
+    "days": [
+      "2026-09-26",
+      "2027-09-25",
+      "2028-09-23",
+      "2029-09-22",
+      "2030-09-28",
+      "2031-09-27",
+      "2032-09-25",
+      "2034-09-23",
+      "2035-09-22"
+    ]
+  },
+  "quiet-oct-14 > refuge-week": {
+    "note": "Oct 14 is a quiet day (Milwaukee, 1912) and blocks everything. Refuge Week runs 7 days, so it still plays the other 6.",
+    "days": [
+      "2026-10-14",
+      "2027-10-14",
+      "2028-10-14",
+      "2029-10-14",
+      "2030-10-14",
+      "2031-10-14",
+      "2032-10-14",
+      "2033-10-14",
+      "2034-10-14",
+      "2035-10-14"
+    ]
+  },
+  "devils-tower > rivers-day": {
+    "note": "Accepted 2026-10-27. Top plays first, the rest on later page views.",
+    "days": [
+      "2028-09-24",
+      "2034-09-24"
+    ]
+  },
+  "devils-tower > voter-registration-day": {
+    "note": "Accepted 2026-10-27. Top plays first, the rest on later page views.",
+    "days": [
+      "2030-09-24"
+    ]
+  },
+  "nd-statehood > bison-day": {
+    "note": "Accepted 2026-10-27. Top plays first, the rest on later page views.",
+    "days": [
+      "2030-11-02"
+    ]
+  },
+  "arbor-day > trnp-memorial-park": {
+    "note": "Accepted 2026-10-27. Top plays first, the rest on later page views.",
+    "days": [
+      "2031-04-25"
+    ]
+  },
+  "election-day > nd-statehood": {
+    "note": "Election Day leads on its day (priority 32); Statehood follows on the next page view.",
+    "days": [
+      "2032-11-02"
+    ]
+  },
+  "devils-tower > public-lands-day > hunting-fishing-day": {
+    "note": "2033: three on one day. Devils Tower first, then one per page view.",
+    "days": [
+      "2033-09-24"
+    ]
+  }
+}

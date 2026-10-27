@@ -64,6 +64,8 @@ table.params td:first-child{white-space:nowrap;padding-right:14px}
 .day.off{opacity:.45}
 .day.today{box-shadow:inset 0 0 0 2px var(--night)}
 .day.sel{outline:3px solid var(--sunset);outline-offset:1px}
+.shared{margin:0 0 18px;padding:14px 16px;border-left:4px solid var(--k-anniversary,#F9D635);background:rgba(0,0,0,.03);font:14px/1.45 Frutiger,Arial,Helvetica,sans-serif}
+.shared h3{margin:0 0 6px;font-size:15px}.shared ul{margin:0;padding-left:18px}.shared li{margin:3px 0}.shared button{font:inherit;color:inherit;text-decoration:underline;background:none;border:0;padding:0;cursor:pointer}
 .day.multi::after{content:"";position:absolute;right:3px;top:3px;width:5px;height:5px;border-radius:50%;background:#fff;box-shadow:0 0 0 1px rgba(0,0,0,.25)}
 .legend{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 14px}
 /* list */
@@ -127,8 +129,13 @@ footer{padding:40px 16px 60px;color:var(--muted);font:14px/1.5 var(--ui)}
 
   <section>
     <h2>The year ahead</h2>
-    <p class="lede">The next twelve months from the date above. Click a day to see what plays.</p>
+    <p class="lede">Dates like Thanksgiving, Arbor Day and Election Day move from year to year. Pick a year to see where everything lands. Click a day to see what plays.</p>
+    <div class="ui" style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:0 0 14px">
+      <label for="year">Show</label>
+      <select id="year"></select>
+    </div>
     <div class="legend" id="legend"></div>
+    <div id="shared"></div>
     <div class="months" id="months"></div>
   </section>
 
@@ -195,7 +202,7 @@ footer{padding:40px 16px 60px;color:var(--muted);font:14px/1.5 var(--ui)}
     if (r.review && r.review !== 'ok') return { cls: 'check', text: 'Needs a check' };
     return { cls: 'on', text: 'On' };
   }
-  function play(e) { D.run(e.id || e, { preview: true, position: $('pos').value, style: $('look').value }); }
+  function play(e) { D.run(e.id || e, { preview: true, position: $('pos').value, style: $('look').value, date: iso(selected) }); }
 
   function showDay(d) {
     selected = d;
@@ -212,7 +219,7 @@ footer{padding:40px 16px 60px;color:var(--muted);font:14px/1.5 var(--ui)}
       $('today-sub').textContent = top.title + '. Nothing plays, and no other delight can play this day.';
     } else {
       $('today-title').textContent = top.title;
-      $('today-sub').textContent = EFFECTS[top.effect] + (on.length > 1 ? ' · wins over ' + on.slice(1).map(function (e) { return e.title; }).join(', ') : '');
+      $('today-sub').textContent = EFFECTS[top.effect] + (on.length > 1 ? ' · then, on the next page a visitor opens: ' + on.slice(1).map(function (e) { return e.title; }).join(', then ') : '');
     }
     $('sim-play').disabled = !(top || all[0]) || (top && top.effect === 'none');
     $('sim-play').onclick = function () { var e = top || all[0]; if (e) play(e); };
@@ -221,10 +228,12 @@ footer{padding:40px 16px 60px;color:var(--muted);font:14px/1.5 var(--ui)}
     if (cell) cell.classList.add('sel');
   }
 
+  var view = 'next';
   function calendar() {
-    var html = '';
+    var html = '', shared = [];
+    var startY = view === 'next' ? today.getFullYear() : +view, startM = view === 'next' ? today.getMonth() : 0;
     for (var m = 0; m < 12; m++) {
-      var first = new Date(today.getFullYear(), today.getMonth() + m, 1);
+      var first = new Date(startY, startM + m, 1);
       var days = new Date(first.getFullYear(), first.getMonth() + 1, 0).getDate();
       html += '<div class="month"><h3>' + fmt(first, { month: 'long', year: 'numeric' }) + '</h3><div class="days">' +
         ['S', 'M', 'T', 'W', 'T', 'F', 'S'].map(function (x) { return '<b aria-hidden="true">' + x + '</b>'; }).join('');
@@ -232,6 +241,8 @@ footer{padding:40px 16px 60px;color:var(--muted);font:14px/1.5 var(--ui)}
       for (var d = 1; d <= days; d++) {
         var date = new Date(first.getFullYear(), first.getMonth(), d), list = D.match(date, null, true);
         var on = list.filter(function (e) { return e.enabled; }), top = on[0] || list[0];
+        var playing = on.filter(function (e) { return !e.rule.live && !e.rule.keyword; });
+        if (playing.length > 1) shared.push({ d: date, list: playing });
         var cls = 'day' + (top ? ' has' : '') + (top && !on.length ? ' off' : '') + (list.length > 1 ? ' multi' : '') + (iso(date) === iso(today) ? ' today' : '');
         var label = fmt(date, { month: 'long', day: 'numeric' }) + (top ? ': ' + list.map(function (e) { return e.title + (e.enabled ? '' : ' (off)'); }).join(', ') : '');
         html += '<button class="' + cls + '" data-d="' + iso(date) + '" title="' + esc(label) + '" aria-label="' + esc(label) + '"' +
@@ -240,6 +251,14 @@ footer{padding:40px 16px 60px;color:var(--muted);font:14px/1.5 var(--ui)}
       html += '</div></div>';
     }
     $('months').innerHTML = html;
+    $('shared').innerHTML = shared.length ? '<div class="shared"><h3>Shared days ' + (view === 'next' ? 'in the next twelve months' : 'in ' + view) + '</h3><ul>' +
+      shared.map(function (x) {
+        var blocked = x.list[0].effect === 'none';
+        return '<li><button data-d="' + iso(x.d) + '">' + esc(fmt(x.d, { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' })) + '</button>: ' +
+          (blocked ? esc(x.list[0].title) + ' is a quiet day, so ' + x.list.slice(1).map(function (e) { return esc(e.title); }).join(', ') + ' does not play that day'
+                   : x.list.map(function (e) { return esc(e.title); }).join(' first, then ')) + '</li>';
+      }).join('') + '</ul><p style="margin:8px 0 0;opacity:.8">On a shared day, a visitor sees the first delight on the first page they open and the next one on their next page. Each plays once per visit.</p></div>' : '';
+    $('shared').onclick = function (ev) { var b = ev.target.closest('[data-d]'); if (b) showDay(parse(b.dataset.d)); };
     $('months').onclick = function (ev) { var b = ev.target.closest('.day'); if (b) showDay(parse(b.dataset.d)); };
     $('legend').innerHTML = Object.keys(KINDS).filter(function (k) { return k !== 'live' && k !== 'hidden'; })
       .map(function (k) { return '<span class="pill"><i style="background:' + kindColor(k) + '"></i>' + KINDS[k] + '</span>'; }).join('') +
@@ -266,7 +285,8 @@ footer{padding:40px 16px 60px;color:var(--muted);font:14px/1.5 var(--ui)}
       var clash = '';
       if (r.next && e.enabled) {
         var same = D.match(r.next).filter(function (x) { return x.id !== e.id; });
-        if (same.length) clash = '<p class="conflict">' + (same[0].priority > e.priority ? 'Loses to ' : 'Wins over ') + same.map(function (x) { return esc(x.title); }).join(', ') + ' that day.</p>';
+        if (same.length) clash = '<p class="conflict">Shares ' + fmt(r.next, { month: 'short', day: 'numeric' }) + ' with ' + same.map(function (x) { return esc(x.title); }).join(', ') + '. ' +
+          (same[0].effect === 'none' && same[0].priority > e.priority ? 'A quiet day blocks it.' : same[0].priority > e.priority ? 'It plays on the visitor\u2019s next page.' : 'It plays first.') + '</p>';
       }
       return '<article class="egg"><div class="when">' + esc(when) + '<small>' + esc(small) + '</small></div><div>' +
         '<h3>' + esc(e.title) + '</h3>' +
@@ -300,9 +320,15 @@ footer{padding:40px 16px 60px;color:var(--muted);font:14px/1.5 var(--ui)}
     s.eggs.forEach(function (e) { full[e.id] = e; review[e.id] = { review: e.review, notes: e.notes }; });
     D.eggs.forEach(function (e) {
       var f = full[e.id] || {};
-      ['title', 'headline', 'text', 'link', 'options'].forEach(function (k) { if (f[k] !== undefined) e[k] = f[k]; });
+      ['title', 'headline', 'text', 'link', 'options', 'since', 'ago', 'milestone'].forEach(function (k) { if (f[k] !== undefined) e[k] = f[k]; });
     });
-  }).catch(function () {}).then(function () { calendar(); filters(); list(); showDay(today); });
+  }).catch(function () {}).then(function () {
+    var ys = '<option value="next">The next twelve months</option>';
+    for (var y = today.getFullYear(); y < today.getFullYear() + 11; y++) ys += '<option value="' + y + '">' + y + '</option>';
+    $('year').innerHTML = ys;
+    $('year').onchange = function () { view = this.value; calendar(); showDay(view === 'next' ? today : new Date(+view, 0, 1)); };
+    calendar(); filters(); list(); showDay(today);
+  });
 })();
 </script>
 </body>

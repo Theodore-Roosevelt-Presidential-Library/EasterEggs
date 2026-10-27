@@ -58,9 +58,17 @@ node scripts/build.mjs
 
 That checks the schedule, writes `docs/delight.js` and the per-delight files in `docs/eggs/`, and prints the loader size. A GitHub Action fails if the built files don't match the schedule.
 
-Rules: `{"date":"MM-DD"}`, `{"nth":[month, weekday 0=Sunday, n or -1 for last]}`, `{"election":true}`, `{"dates":["YYYY-MM-DD"]}` for days that move each year, `{"live":"aurora"}` or `{"live":"snow"}`, `{"keyword":"bully"}`. Add `"span": 7` to run for several days.
+Rules: `{"date":"MM-DD"}`, `{"nth":[month, weekday 0=Sunday, n or -1 for last]}` for days like Thanksgiving that move each year, `{"election":true}` (add `"even":true` for federal election years only), `{"dates":["YYYY-MM-DD"]}` for days with no pattern, `{"live":"aurora"}` or `{"live":"snow"}`, `{"keyword":"bully"}`. Add `"span": 7` to run for several days.
 
-When two delights land on the same day, the higher `priority` wins. A `quiet` entry with `"effect": "none"` blocks every delight that day. These mark days that are not for celebrating, such as February 14, the day Roosevelt's mother and his wife Alice died in 1884.
+### Shared days
+
+Days move from year to year, so two delights sometimes land on the same day (Public Lands Day and Hunting and Fishing Day share the fourth Saturday of September every year). The higher `priority` plays on the visitor's first page view, the next one on their next page view, and so on; each plays once per visit. A `quiet` entry with `"effect": "none"` blocks every delight that day. These mark days that are not for celebrating, such as February 14, the day Roosevelt's mother and his wife Alice died in 1884.
+
+The build runs every day of the next ten years and lists the shared days. Each pairing must be recorded in `docs/collisions.json`; a new one stops the build (and the GitHub check) until someone changes a rule or priority, or accepts it with `node scripts/build.mjs --accept-collisions`. Because the window rolls forward, a new January can surface a pairing for the first time. The preview page shows shared days for any year.
+
+### Years ago
+
+Add `"since": 1898` (the event's year) and the card shows "128 years ago" above the headline, or "150th anniversary" in every 25th year. `"ago"` and `"milestone"` change the wording, with `{n}` and `{nth}` filled in (the birthday uses "His {nth} birthday").
 
 `enabled: false` keeps a delight off the live site while it can still be previewed. `review` holds what still needs checking. Historical claims go through HistorianPanel before a delight is turned on.
 

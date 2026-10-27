@@ -44,7 +44,7 @@
     var r = egg.rule;
     if (r.date) { var p = r.date.split('-'); return day(y, +p[0], +p[1]); }
     if (r.nth) return nth(y, r.nth[0], r.nth[1], r.nth[2]);
-    if (r.election) { var mon = nth(y, 11, 1, 1); return day(y, 11, mon.getDate() + 1); }
+    if (r.election) { if (r.even && y % 2) return null; var mon = nth(y, 11, 1, 1); return day(y, 11, mon.getDate() + 1); }
     if (r.dates) {
       for (var i = 0; i < r.dates.length; i++) if (+r.dates[i].slice(0, 4) === y) {
         var q = r.dates[i].split('-'); return day(+q[0], +q[1], +q[2]);
@@ -100,7 +100,7 @@
       var full = {};
       for (var k in egg) full[k] = egg[k];
       for (k in res[0]) full[k] = res[0][k];
-      return res[1].default(full, { base: BASE, position: (opts && opts.position) || POSITION, style: (opts && opts.style) || STYLE, avoid: attr('avoid'), preview: !!(opts && opts.preview) });
+      return res[1].default(full, { base: BASE, position: (opts && opts.position) || POSITION, style: (opts && opts.style) || STYLE, avoid: attr('avoid'), preview: !!(opts && opts.preview), date: (opts && opts.date) || null });
     }).then(function () { running = false; return true; }, function (err) {
       running = false; if (window.console) console.warn('[TRPL delight]', err); return false;
     });
@@ -114,12 +114,14 @@
   if (qs.get('delight') === 'on') store.set('off', '');
   if (store.get('off') === '1' || EXCLUDE.test(location.pathname)) return;
 
-  function playFirst(list) {
-    var egg = list[0];
-    if (!egg || egg.kind === 'quiet' && egg.effect === 'none') return false;
-    if (store.get('seen:' + egg.id)) return true;
+  // When two delights share a day, the first page view gets the top one and the next page view
+  // gets the runner-up. Each plays once per visit. A quiet day on top blocks everything.
+  function playFirst(list, date) {
+    if (!list[0] || list[0].kind === 'quiet' && list[0].effect === 'none') return false;
+    var egg = list.filter(function (e) { return e.effect !== 'none' && !store.get('seen:' + e.id); })[0];
+    if (!egg) return true;
     store.set('seen:' + egg.id, '1');
-    run(egg);
+    run(egg, { date: date });
     return true;
   }
 
@@ -128,8 +130,8 @@
     var force = qs.get('delight');
     if (force && force !== 'on' && force !== 'off') { run(force, { preview: true }); return; }
 
-    var list = match(qs.get('delight-date') || null);
-    if (list.length) { playFirst(list); return; }
+    var sim = qs.get('delight-date') || null, list = match(sim);
+    if (list.length) { playFirst(list, sim); return; }
 
     // No dated egg today: check the live conditions file, at most once per visit.
     if (EGGS.some(function (e) { return e.enabled && e.rule.live; })) {

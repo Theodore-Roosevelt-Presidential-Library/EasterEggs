@@ -47,6 +47,9 @@ const CSS = `
 h2{margin:0 0 6px;font:700 30px/1 "Dharma Gothic E",Impact,"Arial Narrow",sans-serif;letter-spacing:.01em;text-transform:uppercase;color:${C.yellow}}
 .quiet h2{color:${C.forest}}
 p{margin:0}
+.ago{display:block;margin:0 0 6px;font:700 12px/1.2 Frutiger,Arial,Helvetica,sans-serif;letter-spacing:.08em;text-transform:uppercase;font-style:normal;opacity:.8}
+.ago.mile{display:inline-block;opacity:1;background:${C.yellow};color:${C.night};padding:3px 8px;border-radius:3px}
+.quiet .ago.mile{background:${C.forest};color:${C.white}}
 a{display:inline-block;margin-top:10px;color:${C.yellow};font:700 14px/1.2 Frutiger,Arial,Helvetica,sans-serif;text-decoration:underline;text-underline-offset:3px}
 .quiet a{color:${C.forest}}
 small{display:block;margin-top:8px;font:11px/1.3 Frutiger,Arial,Helvetica,sans-serif;opacity:.7}
@@ -212,6 +215,18 @@ function place(card, preferred, obs) {
   if (drop) card.style.top = `${drop}px`;
 }
 
+// "128 years ago" from egg.since (the event's year), or "125th anniversary" in milestone years
+// (every 25th). egg.ago / egg.milestone override the wording, with {n} and {nth} filled in.
+function yearsAgo(egg, date) {
+  if (!egg.since) return null;
+  const y = date ? +String(date).slice(0, 4) : new Date().getFullYear(), n = y - egg.since;
+  if (n < 1) return null;
+  const v = n % 100, sfx = v > 10 && v < 14 ? 'th' : ({ 1: 'st', 2: 'nd', 3: 'rd' }[n % 10] || 'th');
+  const fill = (t) => t.replace('{n}', n).replace('{nth}', n + sfx);
+  const milestone = n % 25 === 0;
+  return { milestone, text: fill(milestone ? egg.milestone || '{nth} anniversary' : egg.ago || '{n} years ago') };
+}
+
 function banner(root, egg, ctx, onClose, obs) {
   const card = document.createElement('div');
   card.className = `card ${ctx.position || 'top'}${egg.kind === 'quiet' ? ' quiet' : ''}`;
@@ -221,7 +236,8 @@ function banner(root, egg, ctx, onClose, obs) {
   // Photo credits, when a photo version is playing and the photo needs one.
   const photos = egg.options && egg.options.photo && ctx.style !== 'painted' ? [].concat(egg.options.photo) : [];
   const credits = [...new Set(photos.map((p) => p.credit).concat(egg.options && egg.options.credit).filter(Boolean))];
-  card.innerHTML = `<h2>${esc(egg.headline)}</h2>${egg.text ? `<p>${esc(egg.text)}</p>` : ''}` +
+  const ago = yearsAgo(egg, ctx.date);
+  card.innerHTML = (ago ? `<em class="${ago.milestone ? 'ago mile' : 'ago'}">${esc(ago.text)}</em>` : '') + `<h2>${esc(egg.headline)}</h2>${egg.text ? `<p>${esc(egg.text)}</p>` : ''}` +
     (egg.link ? `<a href="${esc(egg.link.href)}">${esc(egg.link.label)}</a>` : '') +
     (credits.length ? `<small>${credits.map(esc).join(' · ')}</small>` : '') +
     `<button type="button" aria-label="Close">×</button>`;
