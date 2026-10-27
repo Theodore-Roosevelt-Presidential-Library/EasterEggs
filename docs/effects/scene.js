@@ -3,9 +3,10 @@
 // options: { photo: {src, focus, credit} | [photos for a montage],
 //            kind: badlands|canyon|tower|forest|bottomland|hills|prairie|river|sea, montage: [kinds],
 //            time: day|dawn|dusk|night, sun: true, leaves: true,
-//            life: bison|pronghorn|horses|hiker|train|canoe|ship, count, lines: [type band text] }
+//            life: bison|pronghorn|horses|hiker|train|canoe|ship|charge, count, lines: [type band text],
+//            charge only: kettle: true (the kettle on the crest), guidon: true, bandanna: true }
 import { play, rand } from './lib.js';
-import { landscape, bison, pronghorn, horse, hiker, train, ship, canoe, puffs, typeBands, grainDataURL } from './paint.js';
+import { landscape, bison, pronghorn, horse, hiker, train, ship, canoe, trooper, rider, puffs, typeBands, grainDataURL } from './paint.js';
 
 export default (egg, ctx) => play(egg, ctx, async (s) => {
   const o = egg.options || {};
@@ -60,13 +61,13 @@ async function painted(s, egg, o, total) {
   const { g, w, h } = s.canvas();
   const bandH = Math.round(Math.min(340, Math.max(190, h * 0.38)));
   const kinds = o.montage || [o.kind || 'badlands'];
-  const lands = kinds.map((k) => landscape(w, bandH, k, o.time || 'day'));
+  const lands = kinds.map((k) => landscape(w, bandH, k, o.time || 'day', undefined, { kettle: o.kettle }));
   const L = lands[0];
   const steam = puffs();
   const life = o.life, count = o.count || ({ bison: 6, pronghorn: 4, horses: 5 }[life] || 1);
   const scale = Math.max(0.7, Math.min(1.15, w / 1100));
   const herdKind = life === 'bison' || life === 'pronghorn' || life === 'horses';
-  const actors = Array.from({ length: life ? count : 0 }, (_, i) => ({
+  const actors = Array.from({ length: life && life !== 'charge' ? count : 0 }, (_, i) => ({
     x: herdKind ? w * rand(0.08, 0.6) + i * 18 : life === 'train' ? w * 0.18 : life === 'ship' ? w * 0.34 : life === 'canoe' ? w * 0.3 : w * 0.1,
     s: ({ bison: 38, pronghorn: 34, horses: 36, hiker: 26, train: 26, ship: 22, canoe: 14 }[life] || 24) * scale * (herdKind ? rand(0.8, 1.1) : 1),
     v: ({ bison: 9, pronghorn: 26, horses: 22, hiker: 22, train: w / 6.5, ship: 18, canoe: 28 }[life] || 20) * (herdKind ? rand(0.8, 1.2) : 1),
@@ -78,6 +79,7 @@ async function painted(s, egg, o, total) {
 
   const ease = (t) => 1 - Math.pow(1 - t, 3);
   let puffClock = 0;
+  const charge = life === 'charge' ? chargeLine(w, scale, o) : null;
   await s.loop(total, (t, dt) => {
     const up = t < 1.5 ? ease(t / 1.5) : t > total - 1 ? 1 - ease(Math.min(1, (t - (total - 1)) / 1)) : 1;
     const y0 = h - bandH * up;
@@ -127,6 +129,7 @@ async function painted(s, egg, o, total) {
         if (puffClock > 0.07) { puffClock = 0; steam.add(st.x, st.y, life === 'ship'); }
       }
     }
+    if (charge) charge(g, t, dt, (x) => y0 + L.ground[Math.max(0, Math.min(L.ground.length - 1, x | 0))]);
     steam.draw(g, dt);
 
     for (const l of leaves) { // November leaves drifting down over the woods
@@ -137,4 +140,42 @@ async function painted(s, egg, o, total) {
       g.fillStyle = l.c; g.beginPath(); g.ellipse(0, 0, 7, 4, 0, 0, 7); g.fill(); g.restore();
     }
   });
+}
+
+// ---------- the charge up Kettle Hill ----------
+// An officer on horseback leads a line of dismounted troopers up the slope, his orderly running just
+// ahead. Some forty yards from the top a wire fence stops the horse and he goes on afoot; the line
+// gathers on the crest by the ranch buildings and the kettle. Sources and checks: schedule.json notes.
+function chargeLine(w, scale, o) {
+  const crest = w * 0.7, fence = w * 0.6, s = 42 * scale;
+  const men = Array.from({ length: o.count || 11 }, (_, i) => ({
+    x: -w * 0.02 - i * w * 0.03 + rand(-12, 12), v: w * rand(0.1, 0.13), ph: rand(0, 6),
+    stop: crest - i * s * 0.55 + rand(-6, 6), depth: rand(-4, 6), s: s * rand(0.92, 1.05),
+    guidon: o.guidon && i === 2, climb: Math.random() < 0.4
+  })).sort((a, b) => a.depth - b.depth);
+  const lead = { x: w * 0.1, v: w * 0.1, ph: 0, onFoot: false, footX: 0 };
+  // His orderly, Henry Bardshar, ran just ahead of the horse (T.R., The Rough Riders, ch. IV).
+  const orderly = { off: s * 1.4, ph: 1 };
+  return (g, t, dt, ground) => {
+    for (const m of men) {
+      const moving = m.x < m.stop;
+      if (moving) { m.x = Math.min(m.stop, m.x + m.v * (m.climb ? 0.85 : 1) * dt); m.ph += dt * (m.climb ? 6.5 : 9); }
+      if (m.x < -40) continue;
+      trooper(g, m.x, ground(m.x) + m.depth, m.s, m.ph, { hold: !moving, guidon: m.guidon });
+    }
+    // the leader
+    if (!lead.onFoot) {
+      lead.x = Math.min(fence, lead.x + lead.v * dt); lead.ph += dt * 8;
+      if (lead.x >= fence) { lead.onFoot = true; lead.footX = fence + s * 0.6; }
+    }
+    { const ox = Math.min(crest + s * 1.6, (lead.onFoot ? lead.footX : lead.x) + orderly.off), still = ox >= crest + s * 1.6;
+      if (!still) orderly.ph += dt * 9;
+      trooper(g, ox, ground(ox) + 1, s, orderly.ph, { hold: still }); }
+    if (lead.onFoot) {
+      horse(g, lead.x, ground(lead.x) + 2, s * 1.25, 0, '#3A2A1E'); // the horse, left at the fence
+      const moving = lead.footX < crest + s * 0.8;
+      if (moving) { lead.footX += w * 0.09 * dt; lead.ph += dt * 9; }
+      trooper(g, lead.footX, ground(lead.footX) + 2, s * 1.05, lead.ph, { hold: !moving, revolver: true, bandanna: o.bandanna });
+    } else rider(g, lead.x, ground(lead.x) + 2, s * 1.25, lead.ph, { bandanna: o.bandanna });
+  };
 }

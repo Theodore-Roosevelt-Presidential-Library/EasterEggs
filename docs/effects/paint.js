@@ -47,7 +47,7 @@ const STRATA = ['#E3C9A8', '#D9895F', '#C8643B', '#EAD9C0', '#B8826A', '#E7805D'
 // A landscape painted once into its own canvas, w x h CSS pixels.
 // kind: badlands | canyon | tower | forest | prairie | river | sea.  time: day | dawn | dusk | night.
 // Returns { cv, ground: Float32Array of the walkable ground line (y per x), water: y or null }.
-export function landscape(w, h, kind = 'badlands', time = 'day', seed = Math.floor(Math.random() * 1e9)) {
+export function landscape(w, h, kind = 'badlands', time = 'day', seed = Math.floor(Math.random() * 1e9), opts = {}) {
   const dpr = Math.min(devicePixelRatio || 1, 2);
   const cv = document.createElement('canvas'); cv.width = Math.ceil(w * dpr); cv.height = Math.ceil(h * dpr);
   const g = cv.getContext('2d'); g.setTransform(dpr, 0, 0, dpr, 0, 0);
@@ -91,7 +91,7 @@ export function landscape(w, h, kind = 'badlands', time = 'day', seed = Math.flo
     g.strokeStyle = 'rgba(70,60,40,.5)'; g.lineWidth = 1;
     for (let i = 0; i < 60; i++) { const x = rand(0, w), y = rand(h * 0.7, h); g.beginPath(); g.moveTo(x, y); g.bezierCurveTo(x + rand(-30, 30), y - rand(10, 30), x + rand(-30, 30), y - rand(0, 20), x + rand(-40, 40), y); g.stroke(); } // vines
     fillGround(ground, () => h * 0.92);
-  } else if (kind === 'hills') {
+  } else if (kind === 'hills' || kind === 'kettle') {
     // Santiago, July 1, 1898: a distant mountain line, open grassy hills, palms down in the valley.
     ridge(g, w, h, (x) => h * 0.3 + fbm(n3, x / 160 + 4) * h * 0.18, '#A9B8C2'); // the mountains around the Santiago plain
     const greens = ['#8FB89A', '#6FA068', '#4E8A4E'];
@@ -104,7 +104,22 @@ export function landscape(w, h, kind = 'badlands', time = 'day', seed = Math.flo
     g.fillStyle = '#2E5E3E'; g.fill(shape(w, h, vf));
     g.fillStyle = '#3E7A44'; for (let x = 0; x < w; x += rand(10, 24)) blob(g, x, vf(x) + 2, rand(6, 12));
     for (let x = rand(20, 90); x < w; x += rand(70, 170)) palm(g, x, vf(x) + 4, rand(34, 52), '#244A30');
-    fillGround(ground, () => h * 0.95);
+    if (kind === 'kettle') {
+      // Kettle Hill itself, in the foreground: open, grassy, climbing to a crest on the right.
+      const hf = (x) => h * (0.98 - 0.5 * smooth(w * 0.18, w * 0.7, x)) + (fbm(n2, x / 60 + 3) - 0.5) * h * 0.025;
+      const hg = g.createLinearGradient(0, h * 0.45, 0, h);
+      hg.addColorStop(0, '#86AE5E'); hg.addColorStop(1, '#5C8C4A');
+      g.fillStyle = hg; g.fill(shape(w, h, hf));
+      tufts(g, w, hf, '#4F7C3E'); tufts(g, w, (x) => hf(x) + h * 0.06, '#5F8E47');
+      fillGround(ground, hf);
+      if (opts.kettle) {
+        // T.R.: the hill 'was surmounted merely by some large ranch buildings', with 'a huge iron kettle' on top.
+        const bh = Math.max(16, h * 0.09);
+        hacienda(g, w * 0.8, hf(w * 0.84) + 3, bh * 2.6, bh);
+        hacienda(g, w * 0.9, hf(w * 0.93) + 3, bh * 1.7, bh * 0.85);
+        kettle(g, w * 0.76, hf(w * 0.76) + 2, Math.max(9, h * 0.04));
+      }
+    } else fillGround(ground, () => h * 0.95);
   } else if (kind === 'sea') {
     ridge(g, w, h, (x) => h * 0.55 + fbm(n, x / 200) * h * 0.18, night ? '#183326' : '#5E8A63');
     water = h * 0.72;
@@ -282,6 +297,96 @@ function palm(g, x, y, s, col) {
   }
 }
 
+// Low ranch buildings on the crest: plastered walls, tiled roof, painted loosely.
+function hacienda(g, x, y, bw, bh) {
+  g.fillStyle = '#D8C7A6'; g.fillRect(x - bw / 2, y - bh, bw, bh);
+  g.fillStyle = '#B9A584'; g.fillRect(x + bw * 0.18, y - bh, bw * 0.32, bh);
+  g.fillStyle = '#9C4A2D'; g.beginPath(); g.moveTo(x - bw * 0.56, y - bh); g.lineTo(x - bw * 0.42, y - bh * 1.45); g.lineTo(x + bw * 0.42, y - bh * 1.45); g.lineTo(x + bw * 0.56, y - bh); g.closePath(); g.fill();
+  g.fillStyle = '#5A4632'; for (let k = 0; k < 3; k++) g.fillRect(x - bw * 0.36 + k * bw * 0.3, y - bh * 0.62, bw * 0.08, bh * 0.62);
+}
+// A huge iron kettle on the crest, 'probably used for sugar refining' (T.R., The Rough Riders, ch. IV).
+function kettle(g, x, y, r) {
+  g.fillStyle = '#2E2A26'; g.beginPath(); g.ellipse(x, y - r * 0.45, r, r * 0.55, 0, 0, Math.PI); g.lineTo(x - r, y - r * 0.45); g.fill();
+  g.strokeStyle = '#3B3631'; g.lineWidth = Math.max(1.5, r * 0.14); g.beginPath(); g.ellipse(x, y - r * 0.45, r, r * 0.18, 0, 0, 7); g.stroke();
+}
+
+// Dismounted cavalry at the run, slouch hat and carbine; or standing at the crest (hold).
+export function trooper(g, x, y, s, ph, o = {}) {
+  g.save(); g.translate(x, y); g.strokeStyle = INK; g.fillStyle = INK; g.lineCap = 'round'; g.lineJoin = 'round';
+  const run = o.hold ? 0 : 1, lean = 0.32 * run;
+  const hipX = 0, hipY = -s * 0.46;
+  const shX = hipX + Math.sin(lean) * s * 0.38, shY = hipY - Math.cos(lean) * s * 0.38;
+  // legs: thigh and shin, swinging opposite
+  g.lineWidth = s * 0.085;
+  [0, Math.PI].forEach((o2) => {
+    const a = run ? Math.sin(ph + o2) * 0.7 : (o2 ? 0.28 : -0.22);
+    const kx = hipX + Math.sin(a + 0.15 * run) * s * 0.24, ky = hipY + Math.cos(a) * s * 0.24;
+    const fx = kx + Math.sin(a - 0.5 * run * (Math.sin(ph + o2) < 0 ? 1.4 : 0.2)) * s * 0.24, fy = Math.min(0, ky + Math.cos(a * 0.6) * s * 0.24);
+    g.beginPath(); g.moveTo(hipX, hipY); g.lineTo(kx, ky); g.lineTo(fx, fy); g.stroke();
+  });
+  g.lineWidth = s * 0.13; g.beginPath(); g.moveTo(hipX, hipY); g.lineTo(shX, shY); g.stroke(); // torso
+  const hx = shX + s * 0.06, hy = shY - s * 0.1;
+  g.beginPath(); g.arc(hx, hy, s * 0.07, 0, 7); g.fill(); // head
+  g.beginPath(); g.ellipse(hx, hy - s * 0.05, s * 0.15, s * 0.028, -0.08, 0, 7); g.fill(); // slouch-hat brim
+  g.beginPath(); g.ellipse(hx - s * 0.01, hy - s * 0.08, s * 0.075, s * 0.05, 0, Math.PI, 0); g.fill(); // crown
+  if (o.bandanna) { // blue polka-dot havelock hanging from the hat, streaming behind
+    const fl = Math.sin(ph * 1.3) * s * 0.03;
+    g.fillStyle = '#2F4F8F'; g.beginPath(); g.moveTo(hx - s * 0.06, hy - s * 0.06); g.quadraticCurveTo(hx - s * 0.2, hy + fl, hx - s * 0.24, hy + s * 0.08 + fl); g.lineTo(hx - s * 0.06, hy + s * 0.05); g.fill();
+    g.fillStyle = '#E8EEF6'; [[-0.13, 0.0], [-0.18, 0.05], [-0.1, 0.04]].forEach(([dx, dy]) => { g.beginPath(); g.arc(hx + dx * s, hy + dy * s + fl * 0.6, s * 0.01, 0, 7); g.fill(); });
+    g.fillStyle = INK;
+  }
+  g.lineWidth = s * 0.06;
+  if (o.revolver) { // an officer: arm forward, revolver in hand, no carbine
+    g.beginPath(); g.moveTo(shX, shY + s * 0.03); g.lineTo(shX + s * 0.14, shY + s * 0.16); g.lineTo(shX + s * 0.3, shY + s * 0.1); g.stroke();
+    g.lineWidth = s * 0.05; g.beginPath(); g.moveTo(shX + s * 0.29, shY + s * 0.12); g.lineTo(shX + s * 0.4, shY + s * 0.08); g.stroke();
+  } else if (o.wave) { // arm up, urging the line on
+    const a = -1.9 + Math.sin(ph * 0.8) * 0.25;
+    g.beginPath(); g.moveTo(shX, shY + s * 0.03); g.lineTo(shX + Math.cos(a) * s * 0.2 + s * 0.12, shY + Math.sin(a) * s * 0.2); g.lineTo(shX + Math.cos(a) * s * 0.32 + s * 0.2, shY + Math.sin(a) * s * 0.36); g.stroke();
+  } else if (o.guidon) { // a guidon on its staff, carried forward
+    const tx = shX + s * 0.12, ty = shY - s * 0.85;
+    g.beginPath(); g.moveTo(shX + s * 0.05, shY + s * 0.12); g.lineTo(shX + s * 0.14, shY - s * 0.05); g.stroke();
+    g.lineWidth = s * 0.03; g.strokeStyle = '#5A4632'; g.beginPath(); g.moveTo(shX + s * 0.02, shY + s * 0.3); g.lineTo(tx, ty); g.stroke();
+    const fw = s * 0.5, fh = s * 0.28, wv = (k) => Math.sin(ph * 2.2 - k * 4) * s * 0.035 * k;
+    g.fillStyle = '#B22234'; g.beginPath(); g.moveTo(tx, ty); g.lineTo(tx - fw, ty + wv(1)); g.lineTo(tx - fw * 0.72, ty + fh * 0.5 + wv(0.8)); g.lineTo(tx, ty + fh * 0.5); g.closePath(); g.fill();
+    g.fillStyle = '#FBFAF6'; g.beginPath(); g.moveTo(tx, ty + fh * 0.5); g.lineTo(tx - fw * 0.72, ty + fh * 0.5 + wv(0.8)); g.lineTo(tx - fw, ty + fh + wv(1)); g.lineTo(tx, ty + fh); g.closePath(); g.fill();
+    g.strokeStyle = 'rgba(42,34,29,.45)'; g.lineWidth = Math.max(0.8, s * 0.015); g.stroke(); // keeps the white half visible against a pale sky
+  } else { // carbine at the port, held across the body
+    const r0x = shX - s * 0.16, r0y = shY + s * 0.22, r1x = shX + s * 0.42, r1y = shY - s * 0.22;
+    g.beginPath(); g.moveTo(shX, shY + s * 0.04); g.lineTo(shX + s * 0.1, shY + s * 0.16); g.lineTo(r0x + (r1x - r0x) * 0.3, r0y + (r1y - r0y) * 0.3); g.stroke();
+    g.beginPath(); g.moveTo(shX + s * 0.02, shY + s * 0.02); g.lineTo(r0x + (r1x - r0x) * 0.62, r0y + (r1y - r0y) * 0.62); g.stroke();
+    g.lineWidth = s * 0.04; g.strokeStyle = '#2A1E16'; g.beginPath(); g.moveTo(r0x, r0y); g.lineTo(r1x, r1y); g.stroke();
+  }
+  g.restore();
+}
+
+// An officer on horseback leading the line, hands on the reins.
+export function rider(g, x, y, s, ph, o = {}) {
+  horse(g, x, y, s, ph, '#3A2A1E');
+  g.save(); g.translate(x, y); g.strokeStyle = INK; g.fillStyle = INK; g.lineCap = 'round';
+  const bx = s * 0.05, by = -s * 0.68 + Math.sin(ph * 2) * s * 0.015;
+  g.lineWidth = s * 0.06; g.beginPath(); g.moveTo(bx, by); g.lineTo(bx + s * 0.12, by + s * 0.2); g.lineTo(bx + s * 0.08, by + s * 0.36); g.stroke(); // leg in the stirrup
+  g.lineWidth = s * 0.1; g.beginPath(); g.moveTo(bx, by); g.lineTo(bx + s * 0.06, by - s * 0.3); g.stroke(); // torso
+  g.restore();
+  // head, hat, bandanna and raised arm, scaled to the rider
+  const hs = s * 0.78;
+  topHalf(g, x + s * 0.11, y - s * 0.98 + Math.sin(ph * 2) * s * 0.015, hs, ph, o);
+}
+function topHalf(g, sx, sy, s, ph, o) { // head, hat, bandanna and raised arm at shoulder (sx, sy)
+  g.save(); g.translate(sx, sy); g.strokeStyle = INK; g.fillStyle = INK; g.lineCap = 'round';
+  const hx = s * 0.05, hy = -s * 0.1;
+  g.beginPath(); g.arc(hx, hy, s * 0.07, 0, 7); g.fill();
+  g.beginPath(); g.ellipse(hx, hy - s * 0.05, s * 0.15, s * 0.028, -0.08, 0, 7); g.fill();
+  g.beginPath(); g.ellipse(hx - s * 0.01, hy - s * 0.08, s * 0.075, s * 0.05, 0, Math.PI, 0); g.fill();
+  if (o.bandanna) {
+    const fl = Math.sin(ph * 1.3) * s * 0.03;
+    g.fillStyle = '#2F4F8F'; g.beginPath(); g.moveTo(hx - s * 0.06, hy - s * 0.06); g.quadraticCurveTo(hx - s * 0.2, hy + fl, hx - s * 0.24, hy + s * 0.08 + fl); g.lineTo(hx - s * 0.06, hy + s * 0.05); g.fill();
+    g.fillStyle = '#E8EEF6'; [[-0.13, 0.0], [-0.18, 0.05], [-0.1, 0.04]].forEach(([dx, dy]) => { g.beginPath(); g.arc(hx + dx * s, hy + dy * s + fl * 0.6, s * 0.01, 0, 7); g.fill(); });
+    g.fillStyle = INK;
+  }
+  g.lineWidth = s * 0.07; g.beginPath(); g.moveTo(0, s * 0.03); g.lineTo(s * 0.16, s * 0.2); g.lineTo(s * 0.32, s * 0.24); g.stroke(); // hands on the reins
+  g.restore();
+}
+
 // A wild horse, mane and tail moving with its gait.
 export function horse(g, x, y, s, ph, col = '#4A3324') {
   g.save(); g.translate(x, y); g.fillStyle = col; g.strokeStyle = col; g.lineCap = 'round';
@@ -378,9 +483,9 @@ export async function typeBands(s, lines, opts = {}) {
     wrap.style.top = `${Math.max(below, s.vh() * 0.22)}px`;
     wrap.style.transform = 'rotate(-4deg)';
   }
-  const offset = Math.floor(Math.random() * COMBOS.length);
+  const combos = opts.combos || COMBOS, offset = Math.floor(Math.random() * combos.length);
   const els = lines.map((t, i) => {
-    const [bg, fg] = (opts.combos || COMBOS)[(i + offset) % COMBOS.length];
+    const [bg, fg] = combos[(i + offset) % combos.length];
     const b = document.createElement('div'); b.className = 'band'; b.textContent = t;
     b.style.cssText = `background:${bg};color:${fg};margin-left:${(i % 2 ? 1 : -1) * Math.min(8, lines.length * 2)}vw;transform:translateX(${i % 2 ? '' : '-'}130vw)`;
     wrap.appendChild(b); return b;

@@ -17,5 +17,6 @@ Library photographs come from the Theodore Roosevelt Presidential Library's Acqu
 | bison-herd.webp | [Buffalo, TRNP](https://commons.wikimedia.org/wiki/File:Buffalo_Theodore_Roosevelt_National_Park.jpg), Michael Holley | CC0 | yes |
 | devils-tower.webp | [Devils Tower National Monument](https://commons.wikimedia.org/wiki/File:Devils_Tower_National_Monument_(29400003663).jpg), NPS | Public domain | yes |
 | grand-canyon.webp | [Vishnu Temple, North Rim](https://commons.wikimedia.org/wiki/File:Grand_Canyon_National_Park,_North_Rim,_Vishnu_Temple_0268_-_Flickr_-_Grand_Canyon_NPS.jpg), Grand Canyon NPS | Public domain | yes |
+| we-the-people.webp | [Constitution of the United States, page 1](https://commons.wikimedia.org/wiki/File:Constitution_of_the_United_States,_page_1.jpg), National Archives (via DPLA) | Public domain | yes |
 
-Images are cropped to 1800 x 1000 and saved as WebP. To swap one, replace the file with the same name, or point `options.photo.src` in docs/schedule.json at a new file.
+Images are cropped to 1800 x 1000 and saved as WebP. we-the-people.webp is the opening words of page one, cut out of the scan with the parchment removed so only the ink remains (Constitution Day). To swap one, replace the file with the same name, or point `options.photo.src` in docs/schedule.json at a new file.

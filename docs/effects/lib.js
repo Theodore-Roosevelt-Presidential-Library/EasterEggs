@@ -220,7 +220,7 @@ function banner(root, egg, ctx, onClose, obs) {
   const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
   // Photo credits, when a photo version is playing and the photo needs one.
   const photos = egg.options && egg.options.photo && ctx.style !== 'painted' ? [].concat(egg.options.photo) : [];
-  const credits = [...new Set(photos.map((p) => p.credit).filter(Boolean))];
+  const credits = [...new Set(photos.map((p) => p.credit).concat(egg.options && egg.options.credit).filter(Boolean))];
   card.innerHTML = `<h2>${esc(egg.headline)}</h2>${egg.text ? `<p>${esc(egg.text)}</p>` : ''}` +
     (egg.link ? `<a href="${esc(egg.link.href)}">${esc(egg.link.label)}</a>` : '') +
     (credits.length ? `<small>${credits.map(esc).join(' · ')}</small>` : '') +

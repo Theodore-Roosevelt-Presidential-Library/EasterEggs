@@ -35,21 +35,24 @@
       },
       "effect": "scene",
       "options": {
-        "kind": "hills",
-        "time": "dawn",
-        "sun": true,
+        "kind": "kettle",
+        "time": "day",
+        "life": "charge",
+        "kettle": true,
+        "guidon": true,
+        "bandanna": true,
         "lines": [
           "KETTLE HILL",
           "JULY 1, 1898"
         ]
       },
       "headline": "July 1, 1898",
-      "text": "Roosevelt led the Rough Riders up Kettle Hill and on to San Juan Heights, outside Santiago, Cuba.",
+      "text": "Roosevelt led the Rough Riders up Kettle Hill beside regular cavalry, including Black troopers of the 9th, then charged across the valley to the main San Juan ridge, outside Santiago, Cuba.",
       "link": {
         "label": "Read the story",
         "href": "https://www.trlibrary.com/tr"
       },
-      "notes": "HistorianPanel 2026-10-27: closed (Rough Riders ch. IV; 9th Cavalry Troop H report). Other regiments charged alongside; copy does not say the Rough Riders went alone. Keep 'Kettle Hill', not 'San Juan Hill'. Period visuals checked 2026-10-27: green hills, palms in the valley, distant mountains and sunrise match T.R.'s and Richard Harding Davis's accounts; no people, flags or buildings; nothing implies the charge came at sunrise.",
+      "notes": "HistorianPanel 2026-10-27: copy closed (Rough Riders ch. IV; 9th Cavalry Troop H report). Keep 'Kettle Hill', not 'San Juan Hill'. Charge scene checked 2026-10-27 (sp-period-visuals, sp-navy-rough-riders; T.R., The Rough Riders ch. I and IV; R. H. Davis, Notes of a War Correspondent; Morton, 3rd Cavalry report): T.R. mounted on Little Texas, orderly Bardshar just ahead, dismounting ~40 yards from the top at a wire fence; troopers on foot in slouch hats and shirtsleeves with Krag carbines, no bayonets or sabres; one plain red-over-white troop guidon (G, E and F troops' guidons were first planted); blue polka-dot havelock streaming behind his hat (Davis, single eyewitness); midday sun (advance ~12:15 p.m.); ranch buildings and a huge iron kettle on the crest, 'probably' for sugar. No hat-waving on the climb (he waved it at the foot, giving the order). Card copy revised 2026-10-27 (Pass A + blind Pass B: Rough Riders ch. IV; NARA Prologue; NPS Buffalo Soldiers): names the regulars, keeps the two charges distinct; 'main San Juan ridge' chosen over 'next ridge' because Kettle Hill is itself on the San Juan Heights.",
       "priority": 30,
       "enabled": true,
       "review": "ok"
@@ -63,14 +66,15 @@
       },
       "effect": "fireworks",
       "headline": "Happy Independence Day",
-      "text": "On July 4, 1886, Roosevelt gave the Independence Day address in Dickinson, Dakota Territory, one of his first major speeches.",
+      "text": "On July 5, 1886, Roosevelt was the orator of the day at Dickinson's first Fourth of July celebration in Dakota Territory. July 4 fell on a Sunday that year.",
       "link": {
         "label": "Plan a visit",
         "href": "https://www.trlibrary.com/visit"
       },
       "priority": 30,
       "enabled": true,
-      "review": "Confirm 'one of his first major speeches' with HistorianPanel (sp-badlands)."
+      "review": "ok",
+      "notes": "HistorianPanel 2026-10-27 (Pass A + blind Pass B): celebration held Monday, July 5, 1886 (St. Paul Daily Globe, July 6, 1886, p. 4, dispatch dated July 5; Dickinson Press 'last Monday', reprinted in Hagedorn). 'Orator of the day' is the Press's phrase; John A. Rea also spoke. Earlier copy (July 4; 'one of his first major speeches') was wrong. Many later sources say July 4."
     },
     {
       "id": "nobel-peace-prize",
@@ -375,7 +379,8 @@
       },
       "priority": 20,
       "enabled": true,
-      "review": "Confirm the 1907 Arbor Day message with HistorianPanel (sp-conservation)."
+      "review": "ok",
+      "notes": "HistorianPanel 2026-10-27: letter 'To the School Children of the United States', April 15, 1907 (Forest History Society transcription; CRS R48749). Any quoted line needs a separate quote check."
     },
     {
       "id": "nps-birthday",
@@ -579,7 +584,8 @@
       },
       "priority": 18,
       "enabled": true,
-      "review": "Confirm 'in every state' against current U.S. Fish and Wildlife Service figures."
+      "review": "ok",
+      "notes": "HistorianPanel 2026-10-27: FWS states at least one refuge in every state; Pelican Island, March 14, 1903."
     },
     {
       "id": "migratory-bird-day",
@@ -935,7 +941,8 @@
       },
       "effect": "ink",
       "options": {
-        "words": "We the People"
+        "script": "img/we-the-people.webp",
+        "credit": "Script: the engrossed Constitution, National Archives"
       },
       "headline": "Happy Constitution Day",
       "text": "The Constitution was signed on September 17, 1787.",
@@ -945,7 +952,8 @@
       },
       "priority": 20,
       "enabled": true,
-      "review": "ok"
+      "review": "ok",
+      "notes": "HistorianPanel 2026-10-27: signed Sept. 17, 1787 (dating clause). Script image from NARA NAID 1667751 (engrossed parchment, RG 11) via Wikimedia/DPLA, public domain."
     },
     {
       "id": "election-day",
@@ -1019,11 +1027,11 @@
       "text": "From the Badlands, thank you for being part of the Library's story.",
       "link": {
         "label": "T.R.'s Thanksgivings",
-        "href": "https://www.trlibrary.com/tr"
+        "href": "https://www.trlibrary.com/tr/thanksgiving-timeline"
       },
       "priority": 20,
       "enabled": true,
-      "review": "Point the link to the Thanksgiving timeline page once it is live."
+      "review": "ok"
     },
     {
       "id": "christmas",
@@ -1041,11 +1049,11 @@
       "text": "Wishing you a warm holiday season.",
       "link": {
         "label": "T.R.'s Christmases",
-        "href": "https://www.trlibrary.com/tr"
+        "href": "https://www.trlibrary.com/tr/christmas-timeline"
       },
       "priority": 20,
       "enabled": true,
-      "review": "Point the link to the Christmas timeline page once it is live."
+      "review": "ok"
     },
     {
       "id": "veterans-day",
@@ -1054,12 +1062,32 @@
       "rule": {
         "date": "11-11"
       },
-      "effect": "note",
+      "effect": "flag",
       "headline": "Thank you to all who served",
       "text": "On Veterans Day, the Library honors America's veterans.",
       "priority": 90,
       "enabled": true,
-      "review": "ok"
+      "review": "ok",
+      "options": {
+        "land": "prairie",
+        "time": "day",
+        "sun": true,
+        "lines": [
+          "VETERANS DAY",
+          "NOVEMBER 11"
+        ],
+        "bands": [
+          [
+            "#092A4D",
+            "#D1CCBD"
+          ],
+          [
+            "#1B4532",
+            "#D1CCBD"
+          ]
+        ]
+      },
+      "notes": "HistorianPanel 2026-10-27: full staff under 4 U.S.C. 6(d), 7(m); hoisted briskly (6(b)). Half-staff only by a separate order in a given year."
     },
     {
       "id": "quiet-feb-14",
@@ -1129,7 +1157,7 @@
       },
       "priority": 10,
       "enabled": true,
-      "review": "Confirm the link goes to the Northern Lights Watch page."
+      "review": "ok"
     },
     {
       "id": "snow-in-medora",
