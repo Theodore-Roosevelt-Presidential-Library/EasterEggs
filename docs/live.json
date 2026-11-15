@@ -1,6 +1,7 @@
 {
-  "updated": "2026-11-15T00:42:00Z",
-  "kp_tonight": null,
+  "updated": "2026-11-15T12:23:26Z",
+  "kp_tonight": 3.33,
   "aurora": false,
+  "snowfall_cm": 0.0,
   "snow": false
 }
